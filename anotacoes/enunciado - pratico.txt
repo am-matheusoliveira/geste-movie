@@ -1,0 +1,77 @@
+Teste Prático para Vaga de Programador PHP Laravel
+
+Instruções Gerais
+
+Você deverá criar um sistema de gerenciamento de filmes utilizando o framework Laravel. 
+O sistema deve ser um CRUD básico (Create, Read, Update, Delete) com alguns relacionamentos entre as entidades.
+Requisitos do Projeto
+
+    Entidades do Sistema
+        Filme (Movie)
+            Título (title)
+            Descrição (description)
+            Ano de lançamento (release_year)
+            Duração (duration) em minutos
+            Classificação etária (age_rating)
+        Gênero (Genre)
+            Nome do gênero (name)
+        Ator (Actor)
+            Nome completo (full_name)
+            Data de nascimento (birth_date)
+        Diretor (Director)
+            Nome completo (full_name)
+            Data de nascimento (birth_date)
+
+    Relacionamentos
+        Um filme pode ter vários gêneros e um gênero pode ser associado a vários filmes (Relacionamento muitos-para-muitos).
+        Um filme pode ter vários atores e um ator pode estar em vários filmes (Relacionamento muitos-para-muitos).
+        Um filme tem um diretor e um diretor pode dirigir vários filmes (Relacionamento um-para-muitos).
+
+    Funcionalidades
+        Filmes:
+            Criar, visualizar, atualizar e deletar filmes.
+            Listar todos os filmes com filtro por gênero, ano de lançamento e classificação etária.
+        Gêneros:
+            Criar, visualizar, atualizar e deletar gêneros.
+            Listar todos os gêneros.
+        Atores:
+            Criar, visualizar, atualizar e deletar atores.
+            Listar todos os atores.
+        Diretores:
+            Criar, visualizar, atualizar e deletar diretores.
+            Listar todos os diretores.
+
+    Validações
+        Todas as entidades devem ter validações apropriadas (e.g., campos obrigatórios, 
+        formatos de data, limites de caracteres).
+
+    Interface do Usuário
+        Utilize o Bootstrap ou qualquer outro framework CSS para criar uma interface amigável.
+        A navegação entre as diferentes partes do sistema deve ser intuitiva.
+
+    Autenticação e Autorização
+        Implementar autenticação de usuários (registro, login e logout).
+        Apenas usuários autenticados podem criar, atualizar ou deletar registros.
+
+    Extras (Diferencial)
+        Implementação de testes unitários e/ou testes de integração.
+        Uso de API para fornecer dados do sistema (e.g., lista de filmes, gêneros, etc.).
+        Deploy da aplicação em um serviço de hospedagem gratuito (e.g., Heroku, Vercel).
+
+Entrega
+
+    Código Fonte: Envie um link para o repositório no GitHub.
+    Instruções de Instalação: Inclua um arquivo README.md com as instruções para instalação e execução do projeto.
+    Prazo: O prazo para entrega deste projeto é de 7 dias a partir da data de recebimento.
+
+Avaliação
+
+Seu trabalho será avaliado com base nos seguintes critérios:
+
+    Organização e clareza do código.
+    Correção e completude das funcionalidades.
+    Uso correto dos recursos do Laravel.
+    Interface do usuário e usabilidade.
+    Implementação das validações e regras de negócio.
+    Documentação e instruções de uso.
+    Implementação dos diferenciais (se houver).
