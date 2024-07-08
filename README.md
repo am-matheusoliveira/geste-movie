@@ -1,5 +1,5 @@
 # Geste Movie
-Este projeto é um sistema de gestão de filmes com catalogo de files, onde você pode visualizar os filmes, gêneros, atores e o diretor. <br />
+Este projeto é um sistema de gestão de filmes com catalogo de filmes, onde você pode visualizar os filmes, gêneros, atores e o diretor. <br />
 
 [//]: # (Você pode ver o projeto funcionando [clicando aqui]http://ec2-18-228-190-190.sa-east-1.compute.amazonaws.com/.)
 
@@ -44,7 +44,7 @@ Ferramentas usadas na construção do projeto:
 ### Lista dos Gêneros do Filme
 ![Lista dos Gêneros do Filme](https://github.com/am-matheusoliveira/geste-movie/assets/94059670/511b89c6-413d-4832-90f3-44ac17ac5fcf)
 
-### Lista dos Gêneros do Filme
+### Lista dos Atores do Filme
 ![Lista dos Atores do Filme](https://github.com/am-matheusoliveira/geste-movie/assets/94059670/1fe996f2-9b32-4261-86ff-fce483318346)
 
 
