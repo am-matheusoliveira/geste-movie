@@ -15,6 +15,7 @@ Ferramentas usadas na construção do projeto:
 - PHP 8
 - Laravel 11
 - MySQL
+- AWS EC2
 
 # Imagens do Sistema
 ### Tela de Login
