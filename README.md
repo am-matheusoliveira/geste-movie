@@ -55,17 +55,17 @@ Por lá, você pode filtrar pelos campos, (ano de lançamento, classificação e
 ## Instalação do Projeto
 ### Se você está nesta página, significa que também é um programador!
 
-Para realizar a instalação deste projeto em sua máquina, você irá precisar de um servidor web,
-recomendo usar o Apache, pois este projeto usou ele como base, mas se preferir pode usar o Nginx.
+Para realizar a instalação deste projeto em sua máquina, você irá precisar de um servidor web, <br />
+recomendo usar o Apache, pois este projeto usou ele como base, mas se preferir pode usar o Nginx. <br />
 
-Para facilitar, você pode usar o Famoso Xamp, que inclui o PHP o MySQL e o Apache.
+Para facilitar, você pode usar o Famoso Xamp, que inclui o PHP o MySQL e o Apache. <br />
 
-Baixe o Zip do projeto, descompacte e mova a pasta para o Htdocs do apache,
-execute o script do Banco de Dados que está na pasta /database-app/backup-database.sql.
+Baixe o Zip do projeto, descompacte e mova a pasta para o Htdocs do apache, <br />
+execute o script do Banco de Dados que está na pasta /database-app/backup-database.sql. <br />
 
-Após finalizadas as etapas acima, vá ao seu navegador e acesse http://localhost/geste_movie.
+Após finalizadas as etapas acima, vá ao seu navegador e acesse http://localhost/geste_movie. <br />
 
-Pronto, com isso o projeto está rodando.
+Pronto, com isso o projeto está rodando. <br />
 
 
 
