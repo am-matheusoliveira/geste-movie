@@ -17,9 +17,9 @@ Ferramentas usadas na construção do projeto:
 - MySQL
 - AWS EC2
 ## Funcionalidades do sistema
-Em todas as telas do sistema, você pode realizar o cadastro, a busca, a atualização e a exclusão dos dados.
-Temos algumas funcionalidades extras na tela de filmes, que são os filtros. 
-Por lá, você pode filtrar pelos campos, (ano de lançamento, classificação etária e o gênero do filme).
+Em todas as telas do sistema, você pode realizar o cadastro, a busca, a atualização e a exclusão dos dados. <br />
+Temos algumas funcionalidades extras na tela de filmes, que são os filtros. <br /> 
+Por lá, você pode filtrar pelos campos, (ano de lançamento, classificação etária e o gênero do filme). <br />
 
 # Imagens do Sistema
 ### Tela de Login
