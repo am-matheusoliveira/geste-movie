@@ -63,7 +63,7 @@ Para facilitar, você pode usar o Famoso Xamp, que inclui o PHP o MySQL e o Apac
 Baixe o Zip do projeto, descompacte e mova a pasta para o Htdocs do apache, <br />
 execute o script do Banco de Dados que está na pasta /database-app/backup-database.sql. <br />
 
-Após finalizadas as etapas acima, vá ao seu navegador e acesse http://localhost/geste_movie. <br />
+Após finalizada as etapas acima, vá ao seu navegador e acesse http://localhost/geste_movie <br />
 
 Pronto, com isso o projeto está rodando. <br />
 
