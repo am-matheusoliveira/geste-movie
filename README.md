@@ -16,7 +16,7 @@ Ferramentas usadas na construção do projeto:
 - Laravel 11
 - MySQL
 - AWS EC2
-## Funcionalidades do sistema.
+## Funcionalidades do sistema
 Em todas as telas do sistema, você pode realizar o cadastro, a busca, a atualização e a exclusão dos dados.
 Temos algumas funcionalidades extras na tela de filmes, que são os filtros. 
 Por lá, você pode filtrar pelos campos, (ano de lançamento, classificação etária e o gênero do filme).
