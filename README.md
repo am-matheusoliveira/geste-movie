@@ -16,6 +16,10 @@ Ferramentas usadas na construção do projeto:
 - Laravel 11
 - MySQL
 - AWS EC2
+## Funcionalidades do sistema.
+Em todas as telas do sistema, você pode realizar o cadastro, a busca, a atualização e a exclusão dos dados.
+Temos algumas funcionalidades extras na tela de filmes, que são os filtros. 
+Por lá, você pode filtrar pelos campos, (ano de lançamento, classificação etária e o gênero do filme).
 
 # Imagens do Sistema
 ### Tela de Login
@@ -48,6 +52,20 @@ Ferramentas usadas na construção do projeto:
 ### Lista dos Atores do Filme
 ![Lista dos Atores do Filme](https://github.com/am-matheusoliveira/geste-movie/assets/94059670/1fe996f2-9b32-4261-86ff-fce483318346)
 
+## Instalação do Projeto
+### Se você está nesta página, significa que também é um programador!
+
+Para realizar a instalação deste projeto em sua máquina, você irá precisar de um servidor web,
+recomendo usar o Apache, pois este projeto usou ele como base, mas se preferir pode usar o Nginx.
+
+Para facilitar, você pode usar o Famoso Xamp, que inclui o PHP o MySQL e o Apache.
+
+Baixe o Zip do projeto, descompacte e mova a pasta para o Htdocs do apache,
+execute o script do Banco de Dados que está na pasta /database-app/backup-database.sql.
+
+Após finalizadas as etapas acima, vá ao seu navegador e acesse http://localhost/geste_movie.
+
+Pronto, com isso o projeto está rodando.
 
 
 
