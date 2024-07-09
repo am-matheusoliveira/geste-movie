@@ -68,9 +68,8 @@ Após finalizada as etapas acima, vá ao seu navegador e acesse http://localhost
 Pronto, com isso o projeto está rodando. <br />
 
 
-
-
-
+## Modelagem do Banco de Dados
+![Modelagem do Banco de Dados](https://github.com/am-matheusoliveira/geste-movie/blob/main/database-app/LucidChart%20Modelagem%20do%20Banco.png)
 
 
 
