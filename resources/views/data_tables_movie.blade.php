@@ -5,15 +5,11 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-
-                    <div class="card-header">
-                        <strong>{{ __('Filmes') }}</strong>                     
-                    </div>
-
-                    <div class="card-body p-1">
-                        <div class="card" style="border-radius: 0px !important; border-color: #fff;">
+                    <div class="card-body p-0">
+                        <div class="card">
                             <div class="card-header d-flex justify-content-between">
                                 <a href="{{ url('/home') }}" class="btn btn-sm btn-primary">Retornar</a>
+                                <strong>{{ __('Catálogo de Filmes') }}</strong>
                                 <a href="{{ url('/movie') }}" class="btn btn-sm btn-primary btn-insert-or-update" data-bs-toggle="modal" data-bs-target="#staticBackdropInsertUpdate">Novo Registro</a>                                
                             </div>
                             
@@ -310,55 +306,52 @@
     <script>
         $(document).ready(function(event){
 
-            // CONFIGURAÇÕES DO PLUGIN: DataTables
-            new DataTable('#principal-table', {
-                initComplete: function () {
-                    this.api()
-                        .columns([2, 4, 5])
-                        .every(function(){
-                            let column = this;
-                        
-                            // CRIANDO DOIS ELEMENTOS: <label> & <select>
-                            let label  = document.createElement('label');
-                            let select = document.createElement('select');
+        // CONFIGURAÇÕES DO PLUGIN: DataTables
+        new DataTable('#principal-table', {
+            initComplete: function () {
+                this.api()
+                    .columns([2, 4, 5])
+                    .every(function(){
+                        let column = this;
+                    
+                        // CRIANDO O ELEMENTO: <select>
+                        let select = document.createElement('select');
 
-                            // ATRIBUINDO CLASSE AO <header> E AO <select>
-                            column.header().setAttribute('class', 'text-center');
-                            select.setAttribute('class', 'form-select');
+                        // ATRIBUINDO CLASSE AO <header> E AO <select>
+                        column.header().setAttribute('class', 'text-center');
+                        select.setAttribute('class', 'fw-bold');
 
-                            // PEGANDO O NOME DA COLUNA(header) E COLOCANDO NO <label>
-                            label.innerHTML = column.header().innerText;
+                        // CRIANDO E ADICIONANDO O <select> AO <header> DA COLUNA 
+                        select.add(new Option(column.header().innerText));
+                        column.header().replaceChildren(select);
 
-                            // CRIANDO E ADICIONANDO O <select> AO <header> DA COLUNA 
-                            select.add(new Option(''));
-                            column.header().replaceChildren(select, label);
+                        // EVENTO DE change AO MUDAR CADA <select>
+                        select.addEventListener('change', function () {
                             
-                            // EVENTO DE change AO MUDAR CADA <select>
-                            select.addEventListener('change', function () {
-                                column
-                                    .search(select.value, {exact: true})
-                                    .draw();
-                            });
-                            
-
-                            // INCLUINDO OS VALORES AO SELECT
-                            column
-                                .data()
-                                .unique()
-                                .sort()
-                                .each(function (value, key) {
-                                    
-                                    // VALOR NULO NÃO DEVE APARECER
-                                    if(value != null){
-                                        select.add(new Option(value));
-                                    }
-                                });
+                            if(['Lançamento', 'Classificação', 'Gênero'].indexOf(select.value) >= 0){
+                                column.search('', {exact: true}).draw();
+                            }else{                                
+                                column.search(select.value, {exact: true}).draw();
+                            }
                         });
+
+                        // INCLUINDO OS VALORES AO SELECT
+                        column
+                            .data()
+                            .unique()
+                            .sort()
+                            .each(function (value, key) {
+                                
+                                // VALOR NULO NÃO DEVE APARECER
+                                if(value != null){
+                                    select.add(new Option(value));
+                                }
+                            });
+                    });
                 },
                 layout: {
-                    topEnd: null
-                },
-                // lengthChange: false,
+                    topEnd: null,                    
+                },                
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('data_tables_movie_list') }}",
@@ -382,16 +375,18 @@
                 language: {                    
                         url: "{{ asset('resources/js/language-pt-br-datatables.json') }}"
                     },
-                      scrollY: "500px",
-                      scrollX: true,
-                      scrollCollapse: true,
-                      paging: true,
+                scrollY: "70vh",
+                scrollX: true,
+                scrollCollapse: true, // HABILITA O REDIMENSIONAMENTO AUTOMÁTICO DO CONTAINER DO DataTables. scrollY PRECISA SER DEFINIDO
+                paging: true,
+                bInfo : false, // MOSTRANDO REGISTROS DE 1 á 10
+                lengthChange: false, // REGISTROS POR PÁGINA - ComboBox
+                pageLength: 25, // QUANTIDADE DE REGISTROS PADRÃO POR PÁGINA
                 createdRow: function (row, data, dataIndex) {
                     $(row).attr('data-registro', data.movie_id_movie);
                     $(row).attr('data-id_director', data.id_director);
                 }
             });
-
 
             // LINHA QUE FOI CLICADA NA TABELA
             var rowTable = null;

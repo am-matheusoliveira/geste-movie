@@ -22,6 +22,9 @@
 
     <!-- Data Tables CSS -->
     <link href="{{ asset('resources/css/datatables.min.css') }}" rel="stylesheet">
+    
+    <!-- CSS CUSTOMIZADO -->
+    <link href="{{ asset('resources/css/custom.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js']) --}}
@@ -83,13 +86,13 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="pt-4"> <!-- py-4 -->
             @yield('content')
         </main>
 
         <!-- Data Tables JS -->
         <script src="{{ asset('resources/js/datatables.min.js') }}"></script>
-
+        
         <!-- JavaScript PADRÃO DA APLICAÇÃO -->
         <script src="{{ asset('public/build/assets/app-DkTTh6p2.js') }}"></script>
 

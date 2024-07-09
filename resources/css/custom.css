@@ -1,0 +1,24 @@
+/* CSS PERSONALIZADO DO DataTables */
+
+/* MARGIN-TOP 0 - PARA O HEADER DO DataTables */
+#principal-table_wrapper > div:nth-child(1), .mt-2{
+    margin-top: .0rem !important;
+}
+
+/* REMOVENDO O MARGIN DO DataTables E ADICIONANDO OUTROS ESTILOS */
+#principal-table_wrapper > div:nth-child(3){
+    margin: 0px !important;
+    background-color: #42414d;
+    border-bottom-left-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+}
+
+/* REMOVENDO OBJETO DO LAYOUT PARA A CORRETA CENTRALIZAÇÃO DOS BOTÕES DE PAGINAÇÃO */
+#principal-table_wrapper > div:nth-child(3) > div:first-child{
+    display: none;
+}
+
+/* CENTRALIZANDO OS BOTÕES DE PAGINAÇÃO  */
+#principal-table_wrapper > div:nth-child(3) > div:last-child{
+    margin: auto !important;
+}
