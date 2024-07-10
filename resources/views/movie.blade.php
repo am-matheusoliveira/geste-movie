@@ -114,7 +114,7 @@
 
                                                                 <div class="form-group col-md-12">
                                                                     <label for="movie_description">Descrição:</label>                                                                    
-                                                                    <textarea class="form-control" id="movie_description" name="movie_description" rows="5" maxlength="500" required></textarea>
+                                                                    <textarea class="form-control" id="movie_description" name="movie_description" rows="5" maxlength="1000" required></textarea>
                                                                 </div>
                                                                 
                                                                 <div class="form-group col-md-12">
