@@ -61,7 +61,7 @@
                                                 @csrf
                                                 <div class="form-row">
                                                     <div class="form-group col-md-12">
-                                                        <label for="director_full_name">Nome do Ator:</label>
+                                                        <label for="director_full_name">Nome do Diretor:</label>
                                                         <input type="text" class="form-control" id="director_full_name" name="director_full_name" placeholder="" required maxlength="100">
                                                         
                                                         <label for="director_birth_date">Aniversário:</label>
