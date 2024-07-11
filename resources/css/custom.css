@@ -1,8 +1,8 @@
 /* CSS PERSONALIZADO DO DataTables */
 
 /* MARGIN-TOP 0 - PARA O HEADER DO DataTables */
-#principal-table_wrapper > div:nth-child(1), .mt-2{
-    margin-top: .0rem !important;
+#principal-table_wrapper > div:nth-child(1){
+    margin-top: -0.5rem !important;
 }
 
 /* REMOVENDO O MARGIN DO DataTables E ADICIONANDO OUTROS ESTILOS */
