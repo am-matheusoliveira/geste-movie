@@ -395,22 +395,25 @@ SELECT
 	A.id_movie, 
     A.title, 
     A.description, 
-    A.release_year, 
-    A.duration, 
-    A.age_rating, 
-    A.id_director,
+    A.release_year,     
+    A.duration,
+    CONCAT(SUBSTRING((A.duration / 60), 1, 1), 'h ', ROUND((0 + RIGHT(SUBSTRING((A.duration / 60), 1, 6), 5)  * 60), 2), 'Min') AS duration_h_m,    
+    CASE
+		WHEN(A.age_rating = 0)THEN 'LIVRE'
+		WHEN(A.age_rating = 10)THEN '10 (dez) anos'
+		WHEN(A.age_rating = 12)THEN '12 (doze) anos'
+		WHEN(A.age_rating = 14)THEN '14 (quatorze) anos'
+		WHEN(A.age_rating = 16)THEN '16 (dezesseis) anos'
+		WHEN(A.age_rating = 18)THEN '18 (dezoito) anos'
+	END AS age_rating,
+    A.age_rating,
 	B.*,
-    D.*,
-    F.*
+    D.*
 FROM 
     movie AS A
 INNER JOIN director AS B ON A.id_director = B.id_director
-
 LEFT JOIN genre_movie AS C ON A.id_movie = C.id_movie
 LEFT JOIN genre AS D ON C.id_genre = D.id_genre
-
-LEFT JOIN actor_movie AS E ON A.id_movie = E.id_movie
-LEFT JOIN actor AS F ON E.id_actor = F.id_actor
 
 -- UPDATE
 UPDATE genre SET name = "NEW NAME" WHERE id_genre = 1;
