@@ -16,7 +16,12 @@ class Director extends Model
     # BUSCA DOS REGISTROS
     public function select_register(Request $request)
     {
-        $result_director = DB::table('director')->select('id_director', 'full_name', 'birth_date')->get();
+        $result_director = DB::table('director')->select(
+                                'id_director', 
+                                'full_name', 
+                                'birth_date',
+                                DB::raw("CONCAT(TIMESTAMPDIFF(YEAR, birth_date, CURDATE()), ' (anos)') AS age")
+                            )->get();
         return $result_director;
     }
 
@@ -27,13 +32,17 @@ class Director extends Model
         $data_usa = implode("-", array_reverse(explode("/", $request->input('director_birth_date'))));
 
         $result_director = DB::table('director')->insertGetId(['full_name' => $request->input('director_full_name'), 'birth_date' => $data_usa]);
+        
+        // CALCULANDO A IDADE DO ATOR
+        $age = date_diff(date_create($data_usa), date_create('now'))->y;
 
         return 
             response()->json(
                 array(
                     'id_director' => $result_director, 
                     'full_name' => $request->input('director_full_name'),
-                    'birth_date' => $request->input('director_birth_date')
+                    'birth_date' => $request->input('director_birth_date'),
+                    'age' => $age.' (anos)'
                 ),
             200);    
     }

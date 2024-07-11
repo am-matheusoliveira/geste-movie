@@ -29,6 +29,7 @@
                                         <th>ID</th>
                                         <th>Nome Completo</th>
                                         <th>DT / Nascimento</th>
+                                        <th>Idade</th>
                                         <th class="text-center">Ações</th>                                         	 	
                                     </thead>
                                     <tbody>
@@ -36,7 +37,8 @@
                                             <tr data-registro="{{ $result_director->id_director }}">
                                                 <td>{{ $result_director->id_director }}</td>
                                                 <td>{{ $result_director->full_name }}</td>
-                                                <td>{{ date("d/m/Y", strtotime($result_director->birth_date)) }}</td>                                                
+                                                <td>{{ date("d/m/Y", strtotime($result_director->birth_date)) }}</td>
+                                                <td>{{ $result_director->age }}</td>
                                                 <td class="text-center" style="width: 200px !important;">
                                                     <button class="btn btn-sm btn-danger delete-register" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete">Excluir</button>
                                                     <button class="btn btn-sm btn-warning btn-insert-or-update" data-bs-toggle="modal" data-bs-target="#staticBackdropInsertUpdate">Editar</button>
@@ -256,6 +258,7 @@
                                     $('<td>').append(response.id_director),
                                     $('<td>').append(response.full_name),
                                     $('<td>').append(response.birth_date),
+                                    $('<td>').append(response.age),
                                     $('<td class="text-center" style="width: 200px !important;">').append(
                                         `
                                             <button class="btn btn-sm btn-danger delete-register" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete">Excluir</button>

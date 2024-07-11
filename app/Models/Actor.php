@@ -16,7 +16,12 @@ class Actor extends Model
     # BUSCA DOS REGISTROS
     public function select_register(Request $request)
     {
-        $result_actor = DB::table('actor')->select('id_actor', 'full_name', 'birth_date')->get();
+        $result_actor = DB::table('actor')->select(
+                            'id_actor', 
+                            'full_name', 
+                            'birth_date',
+                            DB::raw("CONCAT(TIMESTAMPDIFF(YEAR, birth_date, CURDATE()), ' (anos)') AS age")
+                        )->get();
         return $result_actor;
     }
 
@@ -28,13 +33,18 @@ class Actor extends Model
         $data_usa = implode("-", array_reverse(explode("/", $request->input('actor_birth_date'))));
 
         $result_actor = DB::table('actor')->insertGetId(['full_name' => $request->input('actor_full_name'), 'birth_date' => $data_usa]);
+        
+        // CALCULANDO A IDADE DO ATOR
+        $age = date_diff(date_create($data_usa), date_create('now'))->y;
 
+        // RETORNANDO OS DADOS VIA JSON
         return 
             response()->json(
                 array(
                     'id_actor' => $result_actor, 
                     'full_name' => $request->input('actor_full_name'),
-                    'birth_date' => $request->input('actor_birth_date')
+                    'birth_date' => $request->input('actor_birth_date'),
+                    'age' => $age.' (anos)'
                 ),
             200);
     }

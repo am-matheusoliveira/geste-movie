@@ -29,6 +29,7 @@
                                         <th>ID</th>
                                         <th>Nome Completo</th>
                                         <th>DT / Nascimento</th>
+                                        <th>Idade</th>
                                         <th class="text-center">Ações</th>
                                     </thead>
                                     <tbody>
@@ -37,6 +38,7 @@
                                                 <td>{{ $result_actor->id_actor }}</td>
                                                 <td>{{ $result_actor->full_name }}</td>
                                                 <td>{{ date("d/m/Y", strtotime($result_actor->birth_date)) }}</td>                                                
+                                                <td>{{ $result_actor->age }}</td>
                                                 <td class="text-center" style="width: 200px !important;">
                                                     <button class="btn btn-sm btn-danger delete-register" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete">Excluir</button>
                                                     <button class="btn btn-sm btn-warning btn-insert-or-update" data-bs-toggle="modal" data-bs-target="#staticBackdropInsertUpdate">Editar</button>
@@ -198,7 +200,7 @@
 
                     // PEGANDO O VALOR DO INPUT E COLOCANDO NA COLUNA DA LINHA
                     rowTable.cells[1].innerText = $('#actor_full_name').val();                
-                    rowTable.cells[2].innerText = $('#actor_birth_date').val();                
+                    rowTable.cells[2].innerText = $('#actor_birth_date').val();
 
                     // CHAMANDO A FUNÇÃO PARA ATUALIZAR O REGISTRO
                     // OBS: closest() PROCURA O ELEMENTO MAIS PROXIMO AO ATUAL
@@ -256,6 +258,7 @@
                                     $('<td>').append(response.id_actor),
                                     $('<td>').append(response.full_name),
                                     $('<td>').append(response.birth_date),
+                                    $('<td>').append(response.age),
                                     $('<td class="text-center" style="width: 200px !important;">').append(
                                         `
                                             <button class="btn btn-sm btn-danger delete-register" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete">Excluir</button>
