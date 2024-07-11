@@ -176,7 +176,7 @@
                                                         <table class="table table-striped" id="am_table">
                                                             <thead>
                                                                 <th>ID</th>
-                                                                <th>Atores</th>
+                                                                <th>Ator</th>
                                                                 <th class="text-center">Ações</th>
                                                             </thead>
                                                             <tbody>
