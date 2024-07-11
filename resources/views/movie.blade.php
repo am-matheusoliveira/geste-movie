@@ -785,6 +785,9 @@
             $(document).on('click', '.btn-insert-or-update', function(event){
 
                 if(event.target.textContent === 'Novo Registro'){
+                    
+                    // REINICIANDO A VARIAVEL idMovie
+                    idMovie = null;
 
                     // CONFIGURAÇÃO: Novo Registro
                     $('#staticBackdropLabelInsertUpdate').html("Novo Registro");
@@ -837,20 +840,19 @@
                     select_genre_movie(idMovie);
                     
                     // BUSCAR OS ATORES DO FILME SELECIONADO
-                    select_actor_movie(idMovie);                    
+                    select_actor_movie(idMovie);
                 }
             });            
             
             // -------------------- AÇÃO EXECUTADA - INSERÇÃO ou ATUALIZAÇÃO --------------------/
-            $('.insert-or-update').click(function(event){
-
+            $('.insert-or-update').click(function(event){            
                 // ENVIANDO A REQUISIÇÃO HTTP - INSERINDO OU ATUALIZANDO O REGISTRO DO SERVIDOR
                 $.ajax({
                     url: "{{ route('movie_insert_or_update') }}",
                     type: 'POST',
                     dataType: "json",
                     data: {
-                        movie_id_movie:     $(rowTable).data('registro'),
+                        movie_id_movie:     idMovie,
                         movie_title:        $('#movie_title').val(),
                         movie_description:  $('#movie_description').val(),
                         movie_release_year: $('#movie_release_year').val(),
