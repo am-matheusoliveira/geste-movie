@@ -5,29 +5,84 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body p-0">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between">
-                                <a href="{{ url('/home') }}" class="btn btn-sm btn-primary">Retornar</a>
-                                <strong>{{ __('Catálogo de Filmes') }}</strong>
-                                <a href="{{ url('/movie') }}" class="btn btn-sm btn-primary btn-insert-or-update" data-bs-toggle="modal" data-bs-target="#staticBackdropInsertUpdate">Novo Registro</a>                                
-                            </div>
+
+                    <div class="card-header">
+                        <strong>{{ __('Filmes') }}</strong>                     
+                    </div>
+
+                    <div class="card-body">                    
+
+                        <div class="card-body d-flex justify-content-between">
+                            <a href="{{ url('/home') }}" class="btn btn-sm btn-primary">Retornar</a>
+                            <a href="{{ url('/movie') }}" class="btn btn-sm btn-primary btn-insert-or-update" data-bs-toggle="modal" data-bs-target="#staticBackdropInsertUpdate">Novo Registro</a>
                             
-                            <table class="table table-striped w-100" id="principal-table">
-                                <thead>
-                                    <th>Título</th>
-                                    <th class="text-center">Descrição</th>
-                                    <th>Lançamento</th>
-                                    <th>Duração</th>
-                                    <th>Classificação</th>
-                                    <th>Gênero</th>
-                                    <th>Diretor</th>
-                                    <th>Ator</th>
-                                    <th class="text-center">Ações</th>
-                                </thead>
-                                <tbody>                                       
-                                </tbody>
-                            </table>
+                        </div>
+
+                        <div class="card p-2">
+                            <div class="card-header">
+                                <strong>Filmes</strong>
+                            </div>
+
+                            @if (count($result_movie) > 0)
+                                <table class="table table-striped" id="principal-table">
+                                    <thead>
+                                        <!-- <th>ID</th> -->
+                                        <th>Título</th>
+                                        <th class="text-center">Descrição</th>
+                                        <th>Lançamento</th>
+                                        <th>Duração</th>
+                                        <th>Classificação</th>
+                                        <th>Gênero</th>
+                                        <th>Diretor</th>
+                                        <th>Ator</th>
+                                        <th class="text-center">Ações</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($result_movie as $result_movie)
+                                            <tr data-registro="{{ $result_movie->movie_id_movie }}">
+                                                <!-- <td>{{ $result_movie->movie_id_movie }}</td> -->
+                                                <td>{{ $result_movie->title }}</td>
+                                                <td class="text-center">
+                                                    @if(isset($result_movie->description))
+                                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#movie_modal_description{{ $result_movie->movie_id_movie }}">Descrição</button>
+                                                        
+                                                        <!-- MODAL ONDE SERA MOSTRADA A DESCRIÇÃO DE CADA FILME -->
+                                                         
+                                                        <div class="modal fade" id="movie_modal_description{{ $result_movie->movie_id_movie }}" tabindex="-1" aria-labelledby="movie_modal_description_label" aria-hidden="true">
+                                                            <div class="modal-dialog modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="movie_modal_description_label">Descrição</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="form-group">
+                                                                            <textarea class="form-control" rows="5" maxlength="500" readonly>{{ $result_movie->description }}</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $result_movie->release_year }}</td>
+                                                <td>{{ $result_movie->duration }}</td>
+                                                <td>{{ $result_movie->age_rating }}</td>
+                                                <td><button type="button" class="btn btn-primary btn-sm btn-list-genre-movie" data-bs-toggle="modal" data-bs-target="#staticBackdropListGenre">Gêneros</button></td>
+                                                <td data-id_director="{{ $result_movie->id_director }}">{{ $result_movie->director_name }}</td>
+                                                <td><button type="button" class="btn btn-primary btn-sm btn-list-actor-movie" data-bs-toggle="modal" data-bs-target="#staticBackdropListActor">Atores</button></td>
+                                                <td class="text-center" style="width: 200px !important;">
+                                                    <button type="button" class="btn btn-sm btn-danger delete-register" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete">Excluir</button>
+                                                    <button type="button" class="btn btn-sm btn-warning btn-insert-or-update" data-bs-toggle="modal" data-bs-target="#staticBackdropInsertUpdate">Editar</button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
                                                     
                             <!-- MODAL PARA CRIAÇÃO E EDIÇÃO DOS REGISTROS -->
                             <div class="modal bd-example-modal-lg" id="staticBackdropInsertUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelInsertUpdate" aria-hidden="true">
@@ -150,7 +205,7 @@
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h1 class="modal-title fs-5" id="staticBackdropLabelDeleteGenre">Excluir Registro</h1>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         Tem certeza que deseja excluir este registro ?
@@ -176,7 +231,7 @@
                                                         <table class="table table-striped" id="am_table">
                                                             <thead>
                                                                 <th>ID</th>
-                                                                <th>Ator</th>
+                                                                <th>Atores</th>
                                                                 <th class="text-center">Ações</th>
                                                             </thead>
                                                             <tbody>
@@ -221,7 +276,7 @@
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h1 class="modal-title fs-5" id="staticBackdropLabelDeleteActor">Excluir Registro</h1>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                                                                     </div>
                                                                     <div class="modal-body">
                                                                         Tem certeza que deseja excluir este registro ?
@@ -267,6 +322,37 @@
                                 </div>
                             </div>
                             <!-- FIM DO MODAL PARA EXCLUSÃO DOS REGISTROS -->
+
+                            <!-- MODAL PARA LISTAGEM DOS GÊNEROS -->
+                            <div class="modal" id="staticBackdropListGenre" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelListGenre" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabelListGenre">Gêneros do Filme: ?????</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            
+
+
+                                            <table class="table table-striped" id="genre_movie_list">
+                                                <thead>
+                                                    <th>ID</th>
+                                                    <th>Gênero</th>
+                                                </thead>
+                                                <tbody>                                                    
+                                                </tbody>
+                                            </table>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- MODAL PARA LISTAGEM DOS GÊNEROS -->
                              
                             <!-- MODAL PARA LISTAGEM DOS ATORES -->
                             <div class="modal" id="staticBackdropListActor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelListActor" aria-hidden="true">
@@ -306,88 +392,6 @@
     <script>
         $(document).ready(function(event){
 
-        // CONFIGURAÇÕES DO PLUGIN: DataTables
-        new DataTable('#principal-table', {
-            initComplete: function () {
-                this.api()
-                    .columns([2, 4, 5])
-                    .every(function(){
-                        let column = this;
-                    
-                        // CRIANDO O ELEMENTO: <select>
-                        let select = document.createElement('select');
-
-                        // ATRIBUINDO CLASSE AO <header> E AO <select>
-                        column.header().setAttribute('class', 'text-center');
-                        select.setAttribute('class', 'fw-bold');
-
-                        // CRIANDO E ADICIONANDO O <select> AO <header> DA COLUNA 
-                        select.add(new Option(column.header().innerText));
-                        column.header().replaceChildren(select);
-
-                        // EVENTO DE change AO MUDAR CADA <select>
-                        select.addEventListener('change', function () {
-                            
-                            if(['Lançamento', 'Classificação', 'Gênero'].indexOf(select.value) >= 0){
-                                column.search('', {exact: true}).draw();
-                            }else{                                
-                                column.search(select.value, {exact: true}).draw();
-                            }
-                        });
-
-                        // INCLUINDO OS VALORES AO SELECT
-                        column
-                            .data()
-                            .unique()
-                            .sort()
-                            .each(function (value, key) {
-                                
-                                // VALOR NULO NÃO DEVE APARECER
-                                if(value != null){
-                                    select.add(new Option(value));
-                                }
-                            });
-                    });
-                },
-                layout: {
-                    topEnd: null,                    
-                },                
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('data_tables_movie_list') }}",
-                columns: [
-                    // {data: 'DT_RowIndex',name: 'DT_RowIndex'},
-                    {data: 'title',         name: 'title'},
-                    {data: 'description',   name: 'description'},
-                    {data: 'release_year',  name: 'release_year'},
-                    {data: 'duration',      name: 'duration'},
-                    {data: 'age_rating',    name: 'age_rating'},
-                    {data: 'genre_name',    name: 'genre_name'},
-                    {data: 'director_name', name: 'director_name'},
-                    {data: 'actor_name',    name: 'actor_name'},
-                    {data: 'action',        name: 'action'},
-                ],
-                columnDefs: [
-                    { searchable: false, targets: [0, 1, 3, 6, 7, 8]},
-                    // { searchable: true, targets: [2, 4, 5]},
-                    { orderable: false, targets: [2, 4, 5, 7, 8]},
-                ],
-                language: {                    
-                        url: "{{ asset('resources/js/language-pt-br-datatables.json') }}"
-                    },
-                scrollY: "70vh",
-                scrollX: true,
-                scrollCollapse: true, // HABILITA O REDIMENSIONAMENTO AUTOMÁTICO DO CONTAINER DO DataTables. scrollY PRECISA SER DEFINIDO
-                paging: true,
-                bInfo : false, // MOSTRANDO REGISTROS DE 1 á 10
-                lengthChange: false, // REGISTROS POR PÁGINA - ComboBox
-                pageLength: 25, // QUANTIDADE DE REGISTROS PADRÃO POR PÁGINA
-                createdRow: function (row, data, dataIndex) {
-                    $(row).attr('data-registro', data.movie_id_movie);
-                    $(row).attr('data-id_director', data.id_director);
-                }
-            });
-
             // LINHA QUE FOI CLICADA NA TABELA
             var rowTable = null;
             
@@ -414,7 +418,7 @@
                 }
             });
 
-            // CONFIGURAÇÕES DOS MODAIS - PARA OS SUB-CADASTROS
+            // CONFIGURAÇÃOS DOS MODAIS - PARA OS SUB-CADASTROS
             const modal_movie = bootstrap.Modal.getOrCreateInstance('#staticBackdropInsertUpdate');
             //
             const modal_genre_delete = document.getElementById('staticBackdropDeleteGenre');
@@ -429,7 +433,7 @@
                 // FORÇANDO A RE-ABERTURA DO 1º MODAL
                 modal_movie.show();
             });
-            
+
             // QUANDO 2º MODAL(GENRE - INSERT or UPDATE) ESTIVER ABERTO, RE-ABRA O 1º MODAL
             modal_genre_insert_update.addEventListener('show.bs.modal', event => {
             
@@ -449,7 +453,7 @@
 
                 // FORÇANDO A RE-ABERTURA DO 1º MODAL
                 modal_movie.show();
-            });
+            });                        
 
             /*---------------------- GÊNEROS ----------------------- */
 
@@ -486,10 +490,6 @@
                         if(response.length == 0){
                             console.log(response);
                         }
-
-                        // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
-                        new DataTable('#principal-table').ajax.reload();
-
                     }
                 });                
             }
@@ -557,9 +557,6 @@
                         if(response.length == 0){
                             console.log(response);
                         }
-
-                        // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
-                        new DataTable('#principal-table').ajax.reload();
                     }
                 });
             }            
@@ -593,9 +590,6 @@
                                     )
                                 )  
                         );
-
-                        // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
-                        new DataTable('#principal-table').ajax.reload();
                     }
                 });
             }
@@ -635,9 +629,6 @@
                         if(response.length == 0){
                             console.log(response);
                         }
-
-                        // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
-                        new DataTable('#principal-table').ajax.reload();
                     }
                 });                
             }
@@ -705,9 +696,6 @@
                         if(response.length == 0){
                             console.log(response);
                         }
-
-                        // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
-                        new DataTable('#principal-table').ajax.reload();
                     }
                 });
             }            
@@ -741,9 +729,6 @@
                                     )
                                 )  
                         );
-
-                        // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
-                        new DataTable('#principal-table').ajax.reload();                        
                     }
                 });
             }
@@ -768,7 +753,7 @@
             $('#delete-action').click(function(){
                 
                 // CHAMANDO A FUNÇÃO PARA EXCLUIR O REGISTRO
-                delete_register($(rowTable).data('registro'));                                
+                delete_register($(rowTable).data('registro'));
 
                 // REMOVENDO LINHA DA TABELA HTML
                 rowTable.remove();
@@ -790,9 +775,6 @@
                         if(response.length == 0){
                             console.log(response);
                         }
-
-                        // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
-                        new DataTable('#principal-table').ajax.reload();
                     }
                 });                
             }
@@ -838,15 +820,13 @@
 
                     // PEGANDO O VALOR DA COLUNA DA LINHA E COLOCANDO NO INPUT
                     $('#movie_title').val(rowTable.cells[0].innerText);
-                    $('#movie_description').val($(rowTable.cells[1]).find('textarea').val());                    
+                    $('#movie_description').val($(rowTable.cells[1]).find('textarea').val());
                     $('#movie_release_year').val(rowTable.cells[2].innerText);
-                    
-                    $('#movie_duration').val(rowTable.cells[3].innerText.replace(' Minutos', ''));
-                    $('#movie_age_rating').val(rowTable.cells[4].innerText.replace(' Anos', ''));                
+                    $('#movie_duration').val(rowTable.cells[3].innerText);
+                    $('#movie_age_rating').val(rowTable.cells[4].innerText);                
 
                     // DEFININDO A OPÇÃO DO SELECT Diretor COM BASE NO: id_director
-                    // $("#movie_id_director").val($(rowTable.cells[6]).data('id_director')).change();
-                    $("#movie_id_director").val($(rowTable).data('id_director')).change();
+                    $("#movie_id_director").val($(rowTable.cells[6]).data('id_director')).change();
 
                     // BUSCAR OS GÊNEROS DO FILME SELECIONADO
                     select_genre_movie(idMovie);
@@ -861,7 +841,22 @@
 
                 if(event.target.textContent === 'Editar'){
 
-                    // CHAMANDO A FUNÇÃO PARA ATUALIZAR O REGISTRO                    
+                    // PEGANDO O VALOR DO INPUT E COLOCANDO NA COLUNA DA LINHA
+                    rowTable.cells[0].innerText = $('#movie_title').val();                    
+                    $(rowTable.cells[1]).find('textarea').val($('#movie_description').val());
+                    rowTable.cells[2].innerText = $('#movie_release_year').val();
+                    rowTable.cells[3].innerText = $('#movie_duration').val();
+                    rowTable.cells[4].innerText = $('#movie_age_rating').val();
+                    
+                    // COLOCAR O VALUE DO OPTION DO SELECT NA CELULA DA LINHA
+                    $(rowTable.cells[6]).data('id_director', $('#movie_id_director').val());                    
+                    
+                    // COLOCAR O TEXTO DO OPTION DO SELECT NA CELULA DA LINHA
+                    rowTable.cells[6].innerText = $("#movie_id_director option:selected").text();
+                    //
+
+                    // CHAMANDO A FUNÇÃO PARA ATUALIZAR O REGISTRO
+                    // OBS: closest() PROCURA O ELEMENTO MAIS PROXIMO AO ATUAL
                     update_register($(rowTable).data('registro'), $('#movie_title').val(), $('#movie_description').val(), $('#movie_release_year').val(), $('#movie_duration').val(), $('#movie_age_rating').val(), $('#movie_id_director').val());
 
                 }else if(event.target.textContent === 'Salvar'){
@@ -893,9 +888,6 @@
                         if(response.length == 0){
                             console.log(response);
                         }
-
-                        // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
-                        new DataTable('#principal-table').ajax.reload();
                     }
                 });                
             }
@@ -921,8 +913,52 @@
                             console.log(response);
                         }
 
-                        // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
-                        new DataTable('#principal-table').ajax.reload();
+                        description = (response.description === null) ? 'Nenhuma descrição' : response.description;
+                        
+                        $("#principal-table").find('tbody')
+                            .append(
+                                $('<tr data-registro="' + response.movie_id_movie + '">').append(
+                                    $('<td>').append(response.title),
+                                    $('<td class="text-center">').append(                                        
+                                        `
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#movie_modal_description${response.movie_id_movie}">Descrição</button>
+                                            
+                                            <!-- MODAL ONDE SERA MOSTRADA A DESCRIÇÃO DE CADA FILME -->
+
+                                            <div class="modal fade" id="movie_modal_description${response.movie_id_movie}" tabindex="-1" aria-labelledby="movie_modal_description_label" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="movie_modal_description_label">DESCRIPTION:</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <textarea class="form-control" rows="5" maxlength="500" readonly>${description}</textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `
+                                    ),
+                                    $('<td>').append(response.release_year),
+                                    $('<td>').append(response.duration),
+                                    $('<td>').append(response.age_rating),
+                                    $('<td>').append(` <button type="button" class="btn btn-primary btn-sm btn-list-genre-movie" data-bs-toggle="modal" data-bs-target="#staticBackdropListGenre">Gêneros</button> `),
+                                    $('<td data-id_director="' + response.id_director +'">').append(response.director_name),
+                                    $('<td>').append(`<button type="button" class="btn btn-primary btn-sm btn-list-actor-movie" data-bs-toggle="modal" data-bs-target="#staticBackdropListActor">Atores</button>`),
+                                    $('<td class="text-center" style="width: 200px !important;">').append(
+                                        `
+                                            <button class="btn btn-sm btn-danger delete-register" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete">Excluir</button>
+                                            <button class="btn btn-sm btn-warning btn-insert-or-update" data-bs-toggle="modal" data-bs-target="#staticBackdropInsertUpdate">Editar</button>
+                                        `
+                                    )
+                                )  
+                        );
                     }
                 });
             }
@@ -1005,7 +1041,41 @@
                 });
             }            
 
-            /* ------------------ BUSCAR A LISTA DE ATORES BASEADO NO FILME CLICADO ------------------------------------------ */
+            /* ------------------ BUSCAR A LISTA DE GÊNEROS OU ATORES BASEADO NO FILME CLICADO ------------------------------------------ */
+            // BUSCAR A LISTA DOS GÊNEROS
+            $(document).on('click', '.btn-list-genre-movie', function(event){
+                // ALTERANDO O NOME DO FILME NO CABEÇALHO DO MODAL    
+                $('#staticBackdropLabelListGenre').html('Gêneros do Filme: ' + event.target.closest("tr").cells[0].textContent);
+
+                // ENVIANDO A REQUISIÇÃO HTTP                  
+                $.ajax({
+                    url: "{{ route('movie_list_genre') }}",
+                    type: 'POST',
+                    dataType: "json", 
+                    data: {
+                        id_movie: $(event.target.closest("tr")).data('registro')
+                    },                    
+                    success: function(response) {
+                        if(response.length == 0){
+                            console.log(response);
+                        }
+
+                        // RESETAR A TABELA PARA OS NOVOS DADOS
+                        $("#genre_movie_list").find('tbody').empty();
+
+                        // IMPRIMINDO OS DADOS DA REQUISIÇÃO
+                        for(cont = 0; cont < response.length; cont++){
+                            $("#genre_movie_list").find('tbody')
+                                .append(
+                                    $('<tr>').append(
+                                        $('<td>').append(response[cont].id_genre),
+                                        $('<td>').append(response[cont].name)
+                                    )
+                                );
+                        }
+                    }
+                });
+            });
 
             // BUSCAR A LISTA DOS ATORES
             $(document).on('click', '.btn-list-actor-movie', function(event){

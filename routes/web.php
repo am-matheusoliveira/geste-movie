@@ -38,10 +38,12 @@ Route::post('/director_update', [App\Http\Controllers\DirectorController::class,
 Route::get('/director_delete', [App\Http\Controllers\DirectorController::class, 'director_delete'])->name('director_delete')->middleware('auth');
 
 # Movie
-Route::get('/movie',        [App\Http\Controllers\MovieController::class, 'index'])->name('movie_index')->middleware('auth');    
-Route::post('/movie_insert', [App\Http\Controllers\MovieController::class, 'movie_insert'])->name('movie_insert')->middleware('auth');
-Route::post('/movie_update', [App\Http\Controllers\MovieController::class, 'movie_update'])->name('movie_update')->middleware('auth');
+Route::get('/movie', [App\Http\Controllers\MovieController::class, 'index'])->name('movie_index')->middleware('auth');
+Route::post('/movie_insert_or_update', [App\Http\Controllers\MovieController::class, 'movie_insert_or_update'])->name('movie_insert_or_update')->middleware('auth');
 Route::post('/movie_delete', [App\Http\Controllers\MovieController::class, 'movie_delete'])->name('movie_delete')->middleware('auth');
+
+// Rota auxiliar usada pelo DataTables para renderizar a tabela de dados
+Route::get('/movie_list_records', [App\Http\Controllers\MovieController::class, 'movie_list_records'])->name('movie_list_records')->middleware('auth');
 
 # Movie List Genre and Actor
 Route::post('/movie_list_genre', [App\Http\Controllers\MovieController::class, 'movie_list_genre'])->name('movie_list_genre')->middleware('auth');
@@ -58,10 +60,3 @@ Route::post('/actor_movie', [App\Http\Controllers\MovieController::class, 'actor
 Route::post('/actor_movie_insert', [App\Http\Controllers\MovieController::class, 'actor_movie_insert'])->name('actor_movie_insert')->middleware('auth');
 Route::post('/actor_movie_update', [App\Http\Controllers\MovieController::class, 'actor_movie_update'])->name('actor_movie_update')->middleware('auth');
 Route::post('/actor_movie_delete', [App\Http\Controllers\MovieController::class, 'actor_movie_delete'])->name('actor_movie_delete')->middleware('auth');
-
-/*------------------------------------------------------------------MOVIES WITH DataTables-----------------------------------------------------------*/
-# Data Tables - Movie
-Route::get('/data_tables_movie', [App\Http\Controllers\MovieController::class, 'data_tables_movie'])->name('data_tables_movie')->middleware('auth');
-
-// Rota auxiliar usada pelo DataTables para renderizar a tabela de dados
-Route::get('/data_tables_movie_list', [App\Http\Controllers\MovieController::class, 'data_tables_movie_list'])->name('data_tables_movie_list')->middleware('auth');

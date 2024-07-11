@@ -11,12 +11,10 @@ use Yajra\DataTables\Facades\DataTables;
 
 class MovieController extends Controller
 {
-    
-    /*------------------------------------------------------------------DataTables Session-----------------------------------------------------------------------*/
+
     # BUSCA DOS REGISTROS
-    public function data_tables_movie(Request $request, Movie $movie)
+    public function index(Request $request, Movie $movie)
     {
-        $result_movie = $movie->data_tables_select_register($request);
 
         // DADOS DO DIRETOR
         $result_director = new Director();
@@ -30,13 +28,14 @@ class MovieController extends Controller
         $result_actor = new Actor();
         $actor_register = $result_actor->select_register($request);        
 
-        return view('data_tables_movie', compact('result_movie', 'director_register', 'genre_register', 'actor_register'));
+        return view('movie', compact('director_register', 'genre_register', 'actor_register'));
     }
 
-    public function data_tables_movie_list(Request $request, Movie $movie){
+    // FUNÇÃO QUE RETORNA OS DADOS DA VIEW 'movie' E RENDERIZA O DataTables
+    public function movie_list_records(Request $request, Movie $movie){
         if ($request->ajax()) {
             
-            $result_movie = $movie->data_tables_select_register($request);            
+            $result_movie = $movie->select_register($request);            
 
             return Datatables::of($result_movie)
                 // ->addIndexColumn() // ADD UMA COLUNA COMO COLUNA INDICE DA TABELA IGUAL E FEITO NO DBGRID DELPHI
@@ -113,41 +112,12 @@ class MovieController extends Controller
                 })
                 ->rawColumns(['action', 'description', 'actor_name'])->make(true);
         }
-    }
-    /*------------------------------------------------------------------DataTables Session-----------------------------------------------------------------------*/
+    }    
 
-    # BUSCA DOS REGISTROS
-    public function index(Request $request, Movie $movie)
+    # INSERÇÃO OU ATUALIZAÇÃO DO REGISTRO
+    public function movie_insert_or_update(Request $request, Movie $movie)
     {
-        $result_movie = $movie->select_register($request);
-
-        // DADOS DO DIRETOR
-        $result_director = new Director();
-        $director_register = $result_director->select_register($request);
-        
-        // DADOS DO GÊNERO
-        $result_genre = new Genre();
-        $genre_register = $result_genre->select_register($request);
-        
-        // DADOS DO ATOR
-        $result_actor = new Actor();
-        $actor_register = $result_actor->select_register($request);        
-
-        return view('movie', compact('result_movie', 'director_register', 'genre_register', 'actor_register'));
-    }
-
-    # INSERÇÃO DO REGISTRO
-    public function movie_insert(Request $request, Movie $movie)
-    {
-        $result_movie = $movie->insert_register($request);       
-
-        return $result_movie;
-    }
-
-    # ATUALIZAÇÃO DO REGISTRO
-    public function movie_update(Request $request, Movie $movie)
-    {
-        $result_movie = $movie->update_register($request);
+        $result_movie = $movie->insert_or_update_register($request);       
 
         return $result_movie;
     }

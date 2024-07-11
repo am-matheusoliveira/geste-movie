@@ -13,39 +13,6 @@ use PDOException;
 class Movie extends Model
 {
     use HasFactory;
-    
-    # BUSCA DOS REGISTROS - DataTAbles
-    public function data_tables_select_register(Request $request)
-    {   
-        $result_data_tables_movie = DB::table('movie')
-                            ->join('director', 'movie.id_director',       '=', 'director.id_director')
-
-                            ->leftJoin('genre_movie', 'movie.id_movie',       '=', 'genre_movie.id_movie')
-                            ->leftJoin('genre',       'genre_movie.id_genre', '=', 'genre.id_genre')
-
-                            // ->leftJoin('actor_movie', 'movie.id_movie', '=', 'actor_movie.id_movie')
-                            // ->leftJoin('actor',       'actor_movie.id_actor', '=', 'actor.id_actor')
-
-                            ->select(
-                                'movie.id_movie as movie_id_movie',
-                                'movie.title', 
-                                'movie.description', 
-                                'movie.release_year',
-
-                                // 'movie.duration',
-                                DB::raw("concat(movie.duration, ' Minutos') as duration"),
-
-                                // 'movie.age_rating',
-                                DB::raw("concat(movie.age_rating, ' Anos') as age_rating"),                                
-
-                                'movie.id_director', 
-                                'director.full_name as director_name',
-                                // 'actor.full_name as actor_name', 
-                                'genre.name as genre_name', 
-                            )
-                            ->get();
-        return $result_data_tables_movie;
-    }
 
     // BUSCAR REGISTRO PELO ID
     public function select_row($id_register){
@@ -73,70 +40,70 @@ class Movie extends Model
     {   
 
         $result_movie = DB::table('movie')
-                            ->join('director', 'movie.id_director', '=', 'director.id_director')
-                            ->select(                                
-                                'movie.id_movie as movie_id_movie',
-                                'movie.title', 
-                                'movie.description', 
-                                'movie.release_year',                                 
-                                // DB::raw("concat(movie.duration  , ' Minutos') as duration"),
-                                // DB::raw("concat(movie.age_rating, ' Anos') as age_rating"),
-                                'movie.duration',
-                                'movie.age_rating',
-                                'movie.id_director', 
-                                'director.full_name as director_name', 
-                            )
-                            ->get();
-        return $result_movie;
+                        ->join('director',        'movie.id_director',    '=', 'director.id_director')
+                        ->leftJoin('genre_movie', 'movie.id_movie',       '=', 'genre_movie.id_movie')
+                        ->leftJoin('genre',       'genre_movie.id_genre', '=', 'genre.id_genre')
+                        ->select(
+                            'movie.id_movie as movie_id_movie',
+                            'movie.title', 
+                            'movie.description', 
+                            'movie.release_year',
+                            'movie.duration',
+                            DB::raw("CONCAT(SUBSTRING((movie.duration / 60), 1, 1), 'h ', ROUND((0 + RIGHT(SUBSTRING((movie.duration / 60), 1, 6), 5)  * 60), 2), 'Min') AS duration_h_m"),                                                        
+                            DB::raw("                                                                                                                
+                                CASE
+	                            	WHEN(movie.age_rating = 0)THEN 'LIVRE (L)'
+	                            	WHEN(movie.age_rating = 10)THEN '10 (dez) anos'
+	                            	WHEN(movie.age_rating = 12)THEN '12 (doze) anos'
+	                            	WHEN(movie.age_rating = 14)THEN '14 (quatorze) anos'
+	                            	WHEN(movie.age_rating = 16)THEN '16 (dezesseis) anos'
+	                            	WHEN(movie.age_rating = 18)THEN '18 (dezoito) anos'
+	                            END AS age_rating_text
+                            "),
+                            'movie.age_rating', 
+                            'movie.id_director', 
+                            'director.full_name as director_name',
+                            'genre.name as genre_name', 
+                        )
+                        ->get();
+        return $result_movie;        
     }
 
-    # INSERÇÃO DO REGISTRO
-    public function insert_register(Request $request)
+    # INSERÇÃO OU ATUALIZAÇÃO DO REGISTRO
+    public function insert_or_update_register(Request $request)
     {
+        $result_movie = DB::table('movie')->updateOrInsert(
+            
+            [ 'id_movie' => $request->input('movie_id_movie') ],
+            [
+                'title'         => $request->input('movie_title'),
+                'description'   => $request->input('movie_description'),
+                'release_year'  => $request->input('movie_release_year'),
+                'duration'      => $request->input('movie_duration'),
+                'age_rating'    => $request->input('movie_age_rating'),
+                'id_director'   => $request->input('movie_id_director'),
+                'usu_insert'    => Auth::user()->id,
+                'usu_update'    => Auth::user()->id,
+                'dt_update'     => date("Y-m-d H:i:s")
+            ]
+        );
 
-        $result_movie = DB::table('movie')->insertGetId([        
-            'title'         => $request->input('movie_title'),
-            'description'   => $request->input('movie_description'),
-            'release_year'  => $request->input('movie_release_year'),
-            'duration'      => $request->input('movie_duration'),
-            'age_rating'    => $request->input('movie_age_rating'),
-            'id_director'   => $request->input('movie_id_director'),
-            'usu_insert'    => Auth::user()->id,
-            'usu_update'    => Auth::user()->id,
-            'dt_update'     => date("Y-m-d H:i:s")
-        ]);
+        return $result_movie;
 
         // BUCANDO OS DADOS DO NOVO REGISTRO
-        $register_movie = $this->select_row($result_movie);
-        
-        // RETORNANDO OS DADOS EM FORMATO JSON
-        return response()->json(array(
-            'movie_id_movie' => $register_movie[0]->movie_id_movie,
-            'title'          => $register_movie[0]->title,
-            'description'    => $register_movie[0]->description,
-            'release_year'   => $register_movie[0]->release_year,
-            'duration'       => $register_movie[0]->duration,
-            'age_rating'     => $register_movie[0]->age_rating,
-            'id_director'    => $register_movie[0]->id_director,
-            'director_name'  => $register_movie[0]->director_name,
-        ), 200);
-    }
-    
-    # ATUALIZAÇÃO DO REGISTRO
-    public function update_register(Request $request)
-    {
-        $result_movie = DB::table('movie')->where('id_movie', $request->input('movie_id_movie'))->update([            
-            'title'         => $request->input('movie_title'),
-            'description'   => $request->input('movie_description'),
-            'release_year'  => $request->input('movie_release_year'),
-            'duration'      => $request->input('movie_duration'),
-            'age_rating'    => $request->input('movie_age_rating'),
-            'id_director'   => $request->input('movie_id_director'),
-            'usu_update'    => Auth::user()->id,
-            'dt_update'     => date("Y-m-d H:i:s")
-        ]);
-
-        return $result_movie;
+        // $register_movie = $this->select_row($result_movie);
+        // 
+        // // RETORNANDO OS DADOS EM FORMATO JSON
+        // return response()->json(array(
+        //     'movie_id_movie' => $register_movie[0]->movie_id_movie,
+        //     'title'          => $register_movie[0]->title,
+        //     'description'    => $register_movie[0]->description,
+        //     'release_year'   => $register_movie[0]->release_year,
+        //     'duration'       => $register_movie[0]->duration,
+        //     'age_rating'     => $register_movie[0]->age_rating,
+        //     'id_director'    => $register_movie[0]->id_director,
+        //     'director_name'  => $register_movie[0]->director_name,
+        // ), 200);
     }
 
     # EXCLUSÃO DO REGISTRO

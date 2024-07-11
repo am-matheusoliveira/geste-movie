@@ -49,20 +49,7 @@
                             <a href="{{ url('/director') }}" class="btn btn-primary">Acessar opção</a>
                         </div>
                     </div>
-                    <!-- OBS: Essa e a tela primaria que não usa o Plugin do DataTables -->
-                    {{--<div class="card mt-2">
-                        <div class="card-header">
-                            <strong>Filmes</strong>
-                        </div>
 
-                        <div class="card-body d-flex justify-content-around">
-                            <h5 class="card-title">Catálogo de Filmes</h5>
-                            <p class="card-text"></p>
-                            <a href="{{ url('/movie') }}" class="btn btn-primary">Acessar opção</a>
-                        </div>
-                    </div>
-                    --}}
-                    <!-- OBS: Essa e a tela secundaria que usa o Plugin do DataTables -->
                     <div class="card mt-2">
                         <div class="card-header">
                             <strong>Filmes</strong>
@@ -71,7 +58,7 @@
                         <div class="card-body d-flex justify-content-around">
                             <h5 class="card-title">Catálogo de Filmes</h5>
                             <p class="card-text"></p>
-                            <a href="{{ url('/data_tables_movie') }}" class="btn btn-primary">Acessar opção</a>
+                            <a href="{{ url('/movie') }}" class="btn btn-primary">Acessar opção</a>
                         </div>
                     </div>
                 </div>                 
