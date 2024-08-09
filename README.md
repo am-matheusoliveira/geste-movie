@@ -14,7 +14,7 @@ Ferramentas usadas na construção do projeto:
 - Ajax
 - PHP 8
 - Laravel 11
-- MySQL
+- MySQL 8
 - AWS EC2
 - Postman API Tests
 ## Funcionalidades do sistema
@@ -54,9 +54,34 @@ Por lá, você pode filtrar pelos campos, (ano de lançamento, classificação e
 ![Lista dos Atores do Filme](https://github.com/am-matheusoliveira/geste-movie/assets/94059670/1fe996f2-9b32-4261-86ff-fce483318346)
 
 ## Instalação do Projeto
-### Se você está nesta página, significa que também é um programador!
-
-Para realizar a instalação deste projeto em sua máquina, você irá precisar de um servidor web, <br />
+Siga os passos abaixo para configurar e executar o projeto em sua máquina local.
+### 1. Clonar o Repositório
+```
+git clone <URL_DO_REPOSITORIO>
+cd <NOME_DO_REPOSITORIO>
+```
+### 2. Instalar Dependências
+```
+composer install
+```
+### 3. Configurar o Arquivo `.env`
+Renomeie o arquivo `.env.example` para `.env` e configure as variáveis de ambiente, especialmente as relacionadas ao banco de dados.
+```
+cp .env.example .env
+```
+Edite o arquivo `.env` para incluir suas configurações de banco de dados.<br>
+Aqui está um exemplo já configurado para rodar com Docker:
+```
+# MySQL
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=database_name
+DB_USERNAME=root
+DB_PASSWORD=
+```
+### 4. Continuação
+Você também irá precisar de um servidor web, <br />
 recomendo usar o Apache, pois este projeto usou ele como base, mas se preferir pode usar o Nginx. <br />
 
 Para facilitar, você pode usar o Famoso Xamp, que inclui o PHP o MySQL e o Apache. <br />
@@ -64,7 +89,7 @@ Para facilitar, você pode usar o Famoso Xamp, que inclui o PHP o MySQL e o Apac
 Baixe o Zip do projeto, descompacte e mova a pasta para o Htdocs do apache, <br />
 execute o script do Banco de Dados que está na pasta /database-app/backup-database.sql. <br />
 
-Após finalizada as etapas acima, vá ao seu navegador e acesse http://localhost/geste_movie <br />
+Após finalizada as etapas acima, vá ao seu navegador e acesse http://localhost/application-name <br />
 
 Pronto, com isso o projeto está rodando. <br />
 
