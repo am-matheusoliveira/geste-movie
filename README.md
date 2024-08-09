@@ -16,6 +16,7 @@ Ferramentas usadas na construção do projeto:
 - Laravel 11
 - MySQL
 - AWS EC2
+- Postman API Tests
 ## Funcionalidades do sistema
 Em todas as telas do sistema, você pode realizar o cadastro, a busca, a atualização e a exclusão dos dados. <br />
 Temos algumas funcionalidades extras na tela de filmes, que são os filtros. <br /> 
