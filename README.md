@@ -1,5 +1,5 @@
 # Geste Movie
-Este projeto é um sistema de gestão de filmes com catalogo de filmes, onde você pode cadastrar e visualizar os filmes, gêneros, atores e o diretores. <br />
+Este projeto é um sistema de gestão de filmes com catálogo de filmes, onde você pode cadastrar e visualizar os filmes, gêneros, atores e os diretores. <br />
 
 [//]: # (Você pode ver o projeto funcionando [clicando aqui]http://ec2-18-228-190-190.sa-east-1.compute.amazonaws.com/.)
 
