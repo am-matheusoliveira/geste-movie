@@ -56,7 +56,9 @@
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Realizar login') }}</a>
                                 </li>
                             @endif
-                            <li class="nav-item mt-2">{{ __('|') }}</li>                            
+                            <li class="nav-item">
+                                <span class="nav-link">{{ __('|') }}</span>
+                            </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Crie sua conta') }}</a>
