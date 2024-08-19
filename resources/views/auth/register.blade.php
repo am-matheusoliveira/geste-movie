@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Registro') }}</div>
+                <div class="card-header">{{ __('Crie sua conta') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -80,6 +80,10 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Registrar') }}
                                 </button>
+                                
+                                <a class="btn btn-link" href="{{ route('login') }}">
+                                    {{ __('Realizar login') }}
+                                </a>
                             </div>
                         </div>
                     </form>
