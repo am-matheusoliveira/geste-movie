@@ -63,41 +63,17 @@ class MovieController extends Controller
                                     </div>
                                 </div>
                             </div>
-                        ';                    
+                        ';
 
                     return $descriptionBtn;                    
+                })->addColumn('genre_name', function($row) {
+                    
+                    $actorBtn = '<button type="button" class="btn btn-primary btn-sm btn-list-genre-movie" data-bs-toggle="modal" data-bs-target="#staticBackdropListGenre">Gênero(s)</button>';
+                    
+                    return $actorBtn;
                 })->addColumn('actor_name', function($row) {
                     
-                    $actorBtn = ' 
-                            <button type="button" class="btn btn-primary btn-sm btn-list-actor-movie" data-bs-toggle="modal" data-bs-target="#staticBackdropListActor">Atore(s)</button> 
-
-                            <!-- MODAL PARA LISTAGEM DOS ATORES -->
-                            <div class="modal" id="staticBackdropListActor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelListActor" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="staticBackdropLabelListActor">Atores do Filme: ?????</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <table class="table table-striped" id="actor_movie_list">
-                                                <thead>
-                                                    <th>ID</th>
-                                                    <th>Ator</th>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- MODAL PARA LISTAGEM DOS ATORES -->                        
-                    
-                        ';
+                    $actorBtn = '<button type="button" class="btn btn-primary btn-sm btn-list-actor-movie" data-bs-toggle="modal" data-bs-target="#staticBackdropListActor">Atore(s)</button>';
                     
                     return $actorBtn;
                 })
@@ -110,7 +86,7 @@ class MovieController extends Controller
 
                     return $actionBtn;
                 })
-                ->rawColumns(['action', 'description', 'actor_name'])->make(true);
+                ->rawColumns(['action', 'description', 'genre_name', 'actor_name'])->make(true);
         }
     }    
 

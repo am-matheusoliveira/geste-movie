@@ -379,7 +379,7 @@
                                 </div>
                             </div>
                             <!-- MODAL PARA LISTAGEM DOS ATORES -->
-                        </div>                                       
+                        </div>
                     </div>                 
                 </div>
             </div>

@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Auth;
 use PDOException;
+use PhpParser\Node\Stmt\Return_;
+use Ramsey\Uuid\Type\Integer;
 
 class Movie extends Model
 {
@@ -38,21 +41,22 @@ class Movie extends Model
     # BUSCA DOS REGISTROS
     public function select_register(Request $request)
     {   
+        $id_movie            = $request->filled('id_genre')            ? DB::table('genre_movie')->select('id_movie')->where('id_genre', $request->id_genre)->get() : '';
+        $value_lancamento    = $request->filled('value_lancamento')    ? $request->value_lancamento                                                                 : '';
+        $value_classificacao = $request->filled('value_classificacao') ? $request->value_classificacao                                                              : '';
 
         $result_movie = DB::table('movie')
-                        ->join('director',        'movie.id_director',    '=', 'director.id_director')
-                        ->leftJoin('genre_movie', 'movie.id_movie',       '=', 'genre_movie.id_movie')
-                        ->leftJoin('genre',       'genre_movie.id_genre', '=', 'genre.id_genre')
+                        ->join('director', 'movie.id_director', '=', 'director.id_director')                        
                         ->select(
                             'movie.id_movie as movie_id_movie',
                             'movie.title', 
                             'movie.description', 
                             'movie.release_year',
                             'movie.duration',
-                            DB::raw("CONCAT(SUBSTRING((movie.duration / 60), 1, 1), 'h ', ROUND((0 + RIGHT(SUBSTRING((movie.duration / 60), 1, 6), 5)  * 60), 2), 'Min') AS duration_h_m"),                                                        
-                            DB::raw("                                                                                                                
+                            DB::raw("CONCAT(SUBSTRING((movie.duration / 60), 1, 1), 'h ', ROUND((0 + RIGHT(SUBSTRING((movie.duration / 60), 1, 6), 5)  * 60), 2), 'min') AS duration_h_m"),
+                            DB::raw("
                                 CASE
-	                            	WHEN(movie.age_rating = 0)THEN 'LIVRE (L)'
+	                            	WHEN(movie.age_rating = 100)THEN 'LIVRE (L)'
 	                            	WHEN(movie.age_rating = 10)THEN '10 (dez) anos'
 	                            	WHEN(movie.age_rating = 12)THEN '12 (doze) anos'
 	                            	WHEN(movie.age_rating = 14)THEN '14 (quatorze) anos'
@@ -63,10 +67,23 @@ class Movie extends Model
                             'movie.age_rating', 
                             'movie.id_director', 
                             'director.full_name as director_name',
-                            'genre.name as genre_name', 
-                        )
+                        )->when($id_movie, function (Builder $query, $id_movie) {
+
+                            $query->whereIn('movie.id_movie', json_decode(json_encode($id_movie), true));
+
+                        })->when($value_lancamento, function (Builder $query, $value_lancamento) {
+
+                            $query->where('movie.release_year', $value_lancamento);
+                            
+                        })->when($value_classificacao, function (Builder $query, $value_classificacao) {                                                        
+
+                            $query->where('movie.age_rating', $value_classificacao);
+                            
+                        })
                         ->get();
-        return $result_movie;        
+
+        return $result_movie;
+
     }
 
     # INSERÇÃO OU ATUALIZAÇÃO DO REGISTRO

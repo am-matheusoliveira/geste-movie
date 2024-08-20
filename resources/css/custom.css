@@ -22,3 +22,62 @@
 #principal-table_wrapper > div:nth-child(3) > div:last-child{
     margin: auto !important;
 }
+
+/* CSS PERSONALIZADO DO SELECT DE FILTRO DOS GÊNEROS */
+#id_genre_filter+span{
+    width: 100% !important;
+}
+
+/* CONFIGURAÇÃO DOS BOTÓES DE FILTRO DOS GÊNEROS */
+.btn-genre-filter:hover{
+    color: #fff !important;
+    background-color: #42414d !important;
+}
+
+/* CONFIGURANDO O SCROLL BAR DA DIV DOS BOTÕES DOS GÊNEROS */
+.scrolling-wrapper {
+    overflow-x: auto;
+    white-space: nowrap;   
+    height: 3em;
+}
+
+.control-btn {
+    position: absolute;
+    top: 10%;
+    transform: translateY(-22%);
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 10%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.control-prev {
+    left: 1%;
+}
+
+.control-next {
+    right: 1%;
+}
+
+/* CONFIGURAÇÃO PADRÃO DA BARRA DE ROLAGEM */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 4px;
+}
+
+/* ESTILO PARA O TRILHO DA BARRA DE ROLAGEM */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* ESTILO PARA O POLEGAR DA BARRA DE ROLAGEM */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+/* ESTILO PARA O POLEGAR DA BARRA DE ROLAGEM AO PASSAR O MOUSE */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Cor do polegar ao passar o mouse */
+}

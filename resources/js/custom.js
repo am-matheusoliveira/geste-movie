@@ -28,8 +28,18 @@ $('#gm-id-genre').select2({
 
 // CONFIGURAÇÃO DO SELECT - ATORES
 $('#am-id-actor').select2({
-    theme: 'bootstrap-5',
-    dropdownParent: $("#staticBackdropInsertUpdateActor"),
+    theme: 'bootstrap-5',    
+    "language": {
+        "noResults": function(){
+            return "Nenhum registro encontrado!";
+                    
+        }
+    }
+});
+
+// CONFIGURAÇÃO DO SELECT - ATORES
+$('#id_genre_filter').select2({
+    theme: 'bootstrap-5',    
     "language": {
         "noResults": function(){
             return "Nenhum registro encontrado!";

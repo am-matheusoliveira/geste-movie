@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card" id="form-genre">
                     <div class="card-body p-0">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between">
@@ -12,7 +12,35 @@
                                 <strong>{{ __('Catálogo de Filmes') }}</strong>
                                 <a href="{{ url('/movie') }}" class="btn btn-sm btn-primary btn-insert-or-update" data-bs-toggle="modal" data-bs-target="#staticBackdropInsertUpdate">Novo Registro</a>                                
                             </div>
-                            
+
+                            <div class="row p-2 m-0 border border-top-0 border-end-0 border-bottom-2 border-start-0">
+
+                                <div class="col-md-8 position-relative">
+                                    <div class="scrolling-wrapper">                                        
+                                        @if (count($genre_register) > 0)
+                                            @foreach ($genre_register as $genre)
+                                                <button data-id-genre-movie="{{ $genre->id_genre }}" type="button" class="rounded-pill btn-genre-filter btn btn-sm btn-outline-dark fw-bold">{{ $genre->name }}</button>
+                                            @endforeach                                                                                
+                                        @endif
+                                    </div>
+
+                                    <button class="control-btn control-prev">&#9664;</button>
+
+                                    <button class="control-btn control-next">&#9654;</button>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <select aria-label="Default select example" id="id_genre_filter" name="id_genre_filter">
+                                        <option value="100000" selected>Escolha um Gênero</option>
+                                        @if (count($genre_register) > 0)
+                                            @foreach ($genre_register as $genre)
+                                                <option value="{{ $genre->id_genre }}">{{ $genre->name }}</option>
+                                            @endforeach                                                                                
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+
                             <table class="table table-striped w-100" id="principal-table">
                                 <thead>
                                     <th>Título</th>
@@ -71,8 +99,8 @@
                                                                                 <option value="{{ $director_register->id_director }}">{{ $director_register->full_name }}</option>
                                                                             @endforeach                                                                                
                                                                         @endif
-                                                                    </select>                                                                 
-                                                                </div>                                                    
+                                                                    </select>
+                                                                </div>
 
                                                                 <div class="form-row d-flex justify-content-between">
                                                                     <div class="form-group col-md-3">
@@ -90,15 +118,13 @@
                                                                         <label for="movie_age_rating">Classificação: (Idade)</label>
                                                                         <select class="form-select" id="movie_age_rating" name="movie_age_rating" required>
                                                                             <option value="">Escolha uma Classificação</option>
-                                                                            <option value="0">LIVRE (L)</option>
+                                                                            <option value="100">LIVRE (L)</option>
                                                                             <option value="10">10 (dez) anos</option>
                                                                             <option value="12">12 (doze) anos</option>
                                                                             <option value="14">14 (quatorze) anos</option>
                                                                             <option value="16">16 (dezesseis) anos</option>
                                                                             <option value="18">18 (dezoito) anos</option>
-                                                                        </select>
-                                                                        
-
+                                                                        </select>                                                                    
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -278,7 +304,38 @@
                                 </div>
                             </div>
                             <!-- FIM DO MODAL PARA EXCLUSÃO DOS REGISTROS -->
-                             
+
+                            <!-- MODAL PARA LISTAGEM DOS GÊNEROS -->
+                            <div class="modal" id="staticBackdropListGenre" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelListGenre" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabelListGenre">Gêneros do Filme: ?????</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            
+
+
+                                            <table class="table table-striped" id="genre_movie_list">
+                                                <thead>
+                                                    <th>ID</th>
+                                                    <th>Gênero</th>
+                                                </thead>
+                                                <tbody>                                                    
+                                                </tbody>
+                                            </table>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- MODAL PARA LISTAGEM DOS GÊNEROS -->
+
                             <!-- MODAL PARA LISTAGEM DOS ATORES -->
                             <div class="modal" id="staticBackdropListActor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabelListActor" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -317,11 +374,142 @@
     <script>
         $(document).ready(function(event){
 
+            // AVANÇAR O SCROLL DA DIV
+            $('.control-prev').click(function(event){                
+                scrollContainer(-1);
+            });
+
+            // VOLTAR O SCROLL DA DIV
+            $('.control-next').click(function(event){
+                scrollContainer(1);
+            });
+
+            const container = document.querySelector('.scrolling-wrapper');
+            const prevButton = document.querySelector('.control-prev');
+            const nextButton = document.querySelector('.control-next');
+                
+            function updateArrowVisibility() {
+                const scrollLeft = container.scrollLeft;
+                const scrollWidth = container.scrollWidth;
+                const clientWidth = container.clientWidth;
+                
+                // Show/hide the previous button
+                if (scrollLeft > 0) {
+                    prevButton.classList.remove('invisible');
+                    prevButton.classList.add('visible');
+                } else {
+                    prevButton.classList.remove('visible');
+                    prevButton.classList.add('invisible');
+                }
+            
+                // Show/hide the next button
+                if (scrollLeft < (scrollWidth - clientWidth) - 1) {
+                    nextButton.classList.remove('invisible');
+                    nextButton.classList.add('visible');
+                } else {
+                    nextButton.classList.remove('visible');
+                    nextButton.classList.add('invisible');
+                }
+            }
+        
+            function scrollContainer(direction) {
+                const scrollAmount = 150; // Adjust this value to control the scroll distance
+                container.scrollBy({
+                    left: direction * scrollAmount,
+                    behavior: 'smooth'
+                });
+                updateArrowVisibility();
+            }
+        
+            // Initialize visibility
+            updateArrowVisibility();
+        
+            // Update arrow visibility on scroll
+            container.addEventListener('scroll', updateArrowVisibility);
+
+            // ID DO GÊNERO SELECIONADO
+            var id_genre_filter = '';
+
+            // VARIAVEIS AUXILIAR DO FILTRO DA TABELA
+            var classificacao = '';
+            var lancamento = '';
+
+            // CONFIGURANDO AS CORES DOS BOTÕES DE FILTRO
+            var opt_selected = '';
+
+            $(".btn-genre-filter").click(function(event){                
+
+                if($(this).css("background-color") == "rgb(66, 65, 77)" && opt_selected == ''){
+                    opt_selected = $(this);
+
+                    $(this).css("background-color", "rgb(66, 65, 77)");
+                    $(this).css("color", "#fff");
+
+                    id_genre_filter = $(this).data('id-genre-movie');
+                }else{                    
+                    if($(opt_selected[0]).data('id-genre-movie') == $(this).data('id-genre-movie')){
+                        $(this).css("background-color", "rgb(255, 255, 255)");
+                        $(this).css("color", "#000");
+
+                        $(opt_selected).css("background-color", "rgb(255, 255, 255)");
+                        $(opt_selected).css("color", "#000");
+                        opt_selected = '';
+
+                        id_genre_filter = '';
+                    }else{
+
+                        $(opt_selected).css("background-color", "rgb(255, 255, 255)");
+                        $(opt_selected).css("color", "#000");
+                        opt_selected = '';
+
+                        $(this).css("background-color", "rgb(66, 65, 77)");
+                        $(this).css("color", "#fff");
+                        opt_selected = $(this);
+
+                        id_genre_filter = $(this).data('id-genre-movie');
+                    }
+                }                
+
+                // POSICIONANDO O SELECT NA OPÇÃO PADRÃO
+                $('#id_genre_filter').val(100000).change();
+            });
+
+            // CONFIGURANDO O SELECT PARA O FILTRO
+            $("#id_genre_filter").change(function(event){
+                
+                // LIMPANDO O BOTÃO CLICADO
+                if($('#id_genre_filter').val() != 100000){
+                    $(opt_selected).css("background-color", "rgb(255, 255, 255)");
+                    $(opt_selected).css("color", "#000");
+                    opt_selected = '';
+
+                    id_genre_filter = $(this).val();
+                }else if(opt_selected === ''){
+                    
+                    id_genre_filter = '';
+
+                    // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
+                    new DataTable('#principal-table').ajax.reload();
+
+                }
+
+                // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
+                new DataTable('#principal-table').ajax.reload();
+            });
+
+
             // CONFIGURAÇÕES DO PLUGIN: DataTables
             new DataTable('#principal-table', {
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('movie_list_records') }}",                
+                ajax:{ 
+                    url: "{{ route('movie_list_records') }}",
+                    data: function(data){
+                        data.id_genre            = id_genre_filter;
+                        data.value_classificacao = classificacao;
+                        data.value_lancamento    = lancamento;
+                    }
+                },
                 scrollY: "70vh",      // SCROLL_BAR - VERTICAL
                 scrollX: true,        // SCROLL_BAR - HORIZONTAL
                 scrollCollapse: true, // HABILITA O REDIMENSIONAMENTO AUTOMÁTICO DO CONTAINER DO DataTables. scrollY PRECISA SER DEFINIDO
@@ -360,7 +548,7 @@
                 },
                 initComplete: function () {
                     this.api()
-                        .columns([2, 4, 5])
+                        .columns([2, 4])
                         .every(function(){
                             let column = this;
                             
@@ -369,7 +557,10 @@
 
                             // ATRIBUINDO CLASSE AO <header> E AO <select>
                             column.header().setAttribute('class', 'text-center');
-                            select.setAttribute('class', 'fw-bold');
+                            select.setAttribute('class', 'fw-bold');  
+
+                            // ATRIBUINDO UM NAME A CADA SELECT
+                            select.setAttribute('name', column.header().innerText.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
 
                             // CRIANDO E ADICIONANDO O <select> AO <header> DA COLUNA 
                             select.add(new Option(column.header().innerText));
@@ -378,11 +569,23 @@
                             // EVENTO DE change AO MUDAR CADA <select>
                             select.addEventListener('change', function () {
 
-                                if(['Lançamento', 'Classificação', 'Gênero'].indexOf(select.value) >= 0){
-                                    column.search('', {exact: true}).draw();
-                                }else{                                
-                                    column.search(select.value, {exact: true}).draw();
+                                if(select.name === 'classificacao' && select.value != 'Classificação'){
+                                    classificacao = select.options[select.selectedIndex].value;
+                                    // column.search('', {exact: true}).draw();
+
+                                }else if(select.value === 'Classificação'){
+                                    classificacao = '';
                                 }
+
+                                if(select.name === 'lancamento' && select.value != 'Lançamento'){
+                                    lancamento = select.options[select.selectedIndex].value;
+                                    // column.search(select.value, {exact: true}).draw();
+                                }else if(select.value === 'Lançamento'){
+                                    lancamento = '';
+                                }
+                                
+                                // ATUALIZANDO O DataTables - DEPOIS DO EVENTO
+                                new DataTable('#principal-table').ajax.reload();
                             });
 
                             // INCLUINDO OS VALORES AO SELECT
@@ -391,10 +594,30 @@
                                 .unique()
                                 .sort()
                                 .each(function (value, key) {
-
+                                    
                                     // VALOR NULO NÃO DEVE APARECER
                                     if(value != null){
+
                                         select.add(new Option(value));
+
+                                        if(select.name === 'classificacao'){
+                                            
+                                            if(value === 'LIVRE (L)'){
+                                                
+                                                select.options[(key + 1)].value = 100;
+
+                                            }else{
+
+                                                select.options[(key + 1)].value = value.match(/\d+/g).join('');
+
+                                            }
+
+                                        }else if(select.name === 'lancamento'){
+
+                                            select.options[(key + 1)].value = value;
+
+                                        }
+
                                     }
                                 });
                         });
@@ -950,7 +1173,41 @@
                 });
             }            
 
-            /* ------------------ BUSCAR A LISTA DE ATORES BASEADO NO FILME CLICADO ------------------------------------------ */
+            /* ------------------ BUSCAR A LISTA DE GÊNEROS OU ATORES BASEADO NO FILME CLICADO ------------------------------------------ */
+            // BUSCAR A LISTA DOS GÊNEROS
+            $(document).on('click', '.btn-list-genre-movie', function(event){
+                // ALTERANDO O NOME DO FILME NO CABEÇALHO DO MODAL    
+                $('#staticBackdropLabelListGenre').html('Gêneros do Filme: ' + event.target.closest("tr").cells[0].textContent);
+
+                // ENVIANDO A REQUISIÇÃO HTTP                  
+                $.ajax({
+                    url: "{{ route('movie_list_genre') }}",
+                    type: 'POST',
+                    dataType: "json", 
+                    data: {
+                        id_movie: $(event.target.closest("tr")).data('registro')
+                    },                    
+                    success: function(response) {
+                        if(response.length == 0){
+                            console.log(response);
+                        }
+
+                        // RESETAR A TABELA PARA OS NOVOS DADOS
+                        $("#genre_movie_list").find('tbody').empty();
+
+                        // IMPRIMINDO OS DADOS DA REQUISIÇÃO
+                        for(cont = 0; cont < response.length; cont++){
+                            $("#genre_movie_list").find('tbody')
+                                .append(
+                                    $('<tr>').append(
+                                        $('<td>').append(response[cont].id_genre),
+                                        $('<td>').append(response[cont].name)
+                                    )
+                                );
+                        }
+                    }
+                });
+            });
 
             // BUSCAR A LISTA DOS ATORES
             $(document).on('click', '.btn-list-actor-movie', function(event){
