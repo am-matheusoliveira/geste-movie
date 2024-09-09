@@ -655,48 +655,7 @@
                     $('.btn-cancel').prop('disabled', false);
                 }
             });
-
-            /*
-            // CONFIGURAÇÕES DOS MODAIS - PARA OS SUB-CADASTROS
-            const modal_movie = bootstrap.Modal.getOrCreateInstance('#staticBackdropInsertUpdate');
-            //
-            const modal_genre_delete = document.getElementById('staticBackdropDeleteGenre');
-            const modal_genre_insert_update = document.getElementById('staticBackdropInsertUpdateGenre');
-            //
-            const modal_actor_delete = document.getElementById('staticBackdropDeleteActor');
-            const modal_actor_insert_update = document.getElementById('staticBackdropInsertUpdateActor');
-
-            // QUANDO 2º MODAL(GENRE - DELETE) ESTIVER ABERTO, RE-ABRA O 1º MODAL
-            modal_genre_delete.addEventListener('show.bs.modal', event => {
             
-                // FORÇANDO A RE-ABERTURA DO 1º MODAL
-                modal_movie.show();
-            });
-            
-            // QUANDO 2º MODAL(GENRE - INSERT or UPDATE) ESTIVER ABERTO, RE-ABRA O 1º MODAL
-            modal_genre_insert_update.addEventListener('show.bs.modal', event => {
-            
-                // FORÇANDO A RE-ABERTURA DO 1º MODAL
-                modal_movie.show();
-            });
-
-            // QUANDO 2º MODAL(ACTOR - DELETE) ESTIVER ABERTO, RE-ABRA O 1º MODAL
-            modal_actor_delete.addEventListener('show.bs.modal', event => {
-            
-                // FORÇANDO A RE-ABERTURA DO 1º MODAL
-                modal_movie.show();
-            });
-
-            // QUANDO 2º MODAL(ACTOR - INSERT or UPDATE) ESTIVER ABERTO, RE-ABRA O 1º MODAL
-            modal_actor_insert_update.addEventListener('show.bs.modal', event => {
-
-                // FORÇANDO A RE-ABERTURA DO 1º MODAL
-                modal_movie.show();
-            });
-            */
-
-            // -------------------------------------------------------------------------------
-
             // MODAL PRINCIPAL QUE EXIBE OS DETALHES DO FILME
             const modal_movie = bootstrap.Modal.getOrCreateInstance('#staticBackdropInsertUpdate');
                     
@@ -723,9 +682,6 @@
                 });
                     
             });
-            
-            // -------------------------------------------------------------------------------
-
 
             /*---------------------- GÊNEROS ----------------------- */
 
