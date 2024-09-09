@@ -14,17 +14,20 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     
     
-    <!-- CSS PADRÃO DA APLICAÇÃO -->
-    <link href="{{ asset('public/build/assets/app-D-sv12UV.css') }}" rel="stylesheet">
+    <!-- CSS PADRÃO DA APLICAÇÃO -->    
+    <link href="{{ config('app.asset_path') }}/build/assets/app-D-sv12UV.css" rel="stylesheet">
 
     <!-- CSS DO PLUGIN SELEC2 -->
-    <link href="{{ asset('public/build/assets/app-BnsfhC-g.css') }}" rel="stylesheet">
+    <link href="{{ config('app.asset_path') }}/build/assets/app-BnsfhC-g.css" rel="stylesheet">
 
     <!-- Data Tables CSS -->
-    <link href="{{ asset('resources/css/datatables.min.css') }}" rel="stylesheet">
+    <link href="{{ config('app.asset_path') }}/css/datatables.min.css" rel="stylesheet">
     
     <!-- CSS CUSTOMIZADO -->
-    <link href="{{ asset('resources/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ config('app.asset_path') }}/css/custom.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js']) --}}
@@ -93,13 +96,13 @@
         </main>
 
         <!-- Data Tables JS -->
-        <script src="{{ asset('resources/js/datatables.min.js') }}"></script>
+        <script src="{{ config('app.asset_path') }}/js/datatables.min.js"></script>
         
         <!-- JavaScript PADRÃO DA APLICAÇÃO -->
-        <script src="{{ asset('public/build/assets/app-DkTTh6p2.js') }}"></script>
+        <script src="{{ config('app.asset_path') }}/build/assets/app-DkTTh6p2.js"></script>
 
         <!-- JavaScript CUSTOMIZADO -->
-        <script src="{{ asset('resources/js/custom.js') }}"></script>
+        <script src="{{ config('app.asset_path') }}/js/custom.js"></script>
                 
         @hasSection ('footer')
             @yield('footer')

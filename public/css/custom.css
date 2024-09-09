@@ -23,6 +23,14 @@
     margin: auto !important;
 }
 
+/* Alteração dos botões da paginação do datatables*/
+ul.pagination li > a{
+    padding: 5px;
+    margin: 5px;
+    border-radius: 2px;
+    height: 35px;
+}
+
 /* CSS PERSONALIZADO DO SELECT DE FILTRO DOS GÊNEROS */
 #id_genre_filter+span{
     width: 100% !important;

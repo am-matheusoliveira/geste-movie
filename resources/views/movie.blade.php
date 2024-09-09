@@ -537,8 +537,14 @@
                     // { searchable: true, targets: [2, 4, 5]},
                     { orderable: false, targets: [2, 4, 5, 7, 8]},
                 ],
-                language: {                    
-                    url: "{{ asset('resources/js/language-pt-br-datatables.json') }}"
+                language: {
+                    url: "{{ config('app.asset_path') }}/js/language-pt-br-datatables.json",
+                    paginate: {
+                        first: '<i class="fas fa-angle-double-left"></i>',
+                        last: '<i class="fas fa-angle-double-right"></i>',
+                        next: '<i class="fas fa-chevron-right"></i>',
+                        previous: '<i class="fas fa-chevron-left"></i>'
+                    }                    
                 },
                 createdRow: function (row, data, dataIndex) {
                     $(row).attr('data-registro',    data.movie_id_movie);
@@ -650,6 +656,7 @@
                 }
             });
 
+            /*
             // CONFIGURAÇÕES DOS MODAIS - PARA OS SUB-CADASTROS
             const modal_movie = bootstrap.Modal.getOrCreateInstance('#staticBackdropInsertUpdate');
             //
@@ -686,6 +693,39 @@
                 // FORÇANDO A RE-ABERTURA DO 1º MODAL
                 modal_movie.show();
             });
+            */
+
+            // -------------------------------------------------------------------------------
+
+            // MODAL PRINCIPAL QUE EXIBE OS DETALHES DO FILME
+            const modal_movie = bootstrap.Modal.getOrCreateInstance('#staticBackdropInsertUpdate');
+                    
+            // MODAIS SECUNDÁRIOS
+            const modals = [
+                'staticBackdropDeleteGenre',
+                'staticBackdropInsertUpdateGenre',
+                'staticBackdropDeleteActor',
+                'staticBackdropInsertUpdateActor'
+            ];
+                    
+            // ITERAÇÃO PARA INCLUIR O EVENTO 'show.bs.modal' EM CADA MODAL
+            modals.forEach(function(modalSelector) {
+                    
+                // CAPTURANDO O ID DE CADA MODAL SECUNDÁRIO
+                const modalElement = document.getElementById(modalSelector);
+                    
+                // INCLUINDO O EVENTO 'show.bs.modal' PARA CADA MODAL SECUNDÁRIO
+                modalElement.addEventListener('show.bs.modal', () => {
+                    
+                    // REABRINDO O MODAL PRINCIPAL
+                    modal_movie.show();
+                    
+                });
+                    
+            });
+            
+            // -------------------------------------------------------------------------------
+
 
             /*---------------------- GÊNEROS ----------------------- */
 
