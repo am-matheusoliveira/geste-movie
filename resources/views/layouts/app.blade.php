@@ -9,10 +9,12 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- FavIcon -->
+    <link rel="icon" href="{{ config('app.asset_path') }}/clapperboard.ico" type="image/x-icon">
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">    
     
     <!-- CSS PADRÃO DA APLICAÇÃO -->    
     <link href="{{ config('app.asset_path') }}/build/assets/app-D-sv12UV.css" rel="stylesheet">
@@ -37,7 +39,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                
+
                 <strong><a class="navbar-brand" href="{{ url('/') }}"> {{ config('app.name', 'Laravel') }} </a></strong>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
