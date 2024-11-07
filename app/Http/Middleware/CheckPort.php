@@ -18,7 +18,7 @@ class CheckPort
 
         } else { // Para outras portas (ex. Apache/Nginx em produção)
             
-            config(['app.asset_path' => 'public']);
+            config(['app.asset_path' => (asset('').'public')]);
 
         }
 
