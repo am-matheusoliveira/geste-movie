@@ -109,15 +109,17 @@
                                     </div>
                                 </div>
                             </form>
-                            <div class="row">
-                                <div class="col-12">
-                                    <hr class="mt-5 mb-4 border-secondary-subtle">
-                                    <div class="d-flex gap-4 justify-content-center">
-                                        <a href="{{ route('login') }}" class="link-secondary text-decoration-none">{{ __('Entrar') }}</a>
-                                        <a href="{{ route('register') }}" class="link-secondary text-decoration-none">{{ __('Crie sua conta') }}</a>
+                            @guest
+                                <div class="row">
+                                    <div class="col-12">
+                                        <hr class="mt-5 mb-4 border-secondary-subtle">
+                                        <div class="d-flex gap-4 justify-content-center">
+                                            <a href="{{ route('login') }}" class="link-secondary text-decoration-none">{{ __('Entrar') }}</a>
+                                            <a href="{{ route('register') }}" class="link-secondary text-decoration-none">{{ __('Crie sua conta') }}</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endguest
                         </div>
                     </div>
                 </div>
