@@ -36,4 +36,14 @@ class ConfirmPasswordController extends Controller
     {
         $this->middleware('auth');
     }
+
+    /**
+     * Redireciona o usuário para uma URL/Rota que o middleware armazenou como destino
+     * @return void
+     */
+    protected function redirectTo()
+    {        
+        // Retorno da função
+        return redirect()->route(session()->get('next_redirect_route'));
+    }    
 }

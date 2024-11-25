@@ -1,3 +1,18 @@
+
+/* Importação da fonte Ubuntu*/
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;600;700&display=swap');
+
+/* Configuração de fonte padrão para todo o sistema*/
+*{
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 500;
+}
+
+/* Impede o usário de selecionar qualquer texto */
+.no-select {
+    user-select: none;
+}
+
 /* CSS PERSONALIZADO DO DataTables */
 
 /* MARGIN-TOP 0 - PARA O HEADER DO DataTables */

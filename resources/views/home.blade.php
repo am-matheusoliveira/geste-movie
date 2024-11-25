@@ -9,7 +9,7 @@
                 <!-- OPÇÕES DO SISTEMA  -->
                 <div class="card-header">
                     <strong>{{ __('Menu do sistema') }}</strong> 
-                    <br>
+                    <br>                    
                     <p class="h3">{{ __('Escolha uma opção para navegar pelo sistema!') }}</p>
                 </div>
                 
@@ -22,6 +22,13 @@
                         <div class="card-body d-flex justify-content-around">
                             <h5 class="card-title">Gêneros de Filmes</h5>
                             <p class="card-text"></p>
+                            {{--                      
+                            <form action="{{ route('delete-account') }}" method="GET">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Excluir minha conta</button>
+                            </form>
+                            --}}
+
                             <a href="{{ url('/genre') }}" class="btn btn-primary">Acessar opção</a>
                         </div>
                     </div>

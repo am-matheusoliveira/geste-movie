@@ -6,18 +6,36 @@ use Illuminate\Support\Facades\Auth;
 # OBS: Todas as rotas do sistema somente serão acessadas se o usuário estiver logado.
 
 
-# ROTAS DO USUÁRIO
-Auth::routes();
+# ROTAS DO USUÁRIO COM VERIFICAÇÃO DE E-MAIL
+Auth::routes(['verify' => true]);
 
-# Login
+# Login COM UM MIDDLEWARE CONFIGURADO, COM ELE O USUÁRIO APENAS ACESSARÁ ROTAS PUBLICAS
 Route::get('/', function(){
 
-    return view('auth/login'); 
+    return view('auth/login');
 
 })->middleware('guest');
 
+// TESTE DE USO DO MIDDLEWARE - password.confirm DO LARAVEL UI
+/*
+Route::get('/delete-account', function () {
+
+    // Excluindo o usuário logado
+    $user = auth()->user();
+    $user->delete();
+
+    // Fazendo logout
+    auth()->logout();
+    
+    // Redirecionando para a tela de login com uma mensagem de sucesso
+    return redirect('/login')->with('status', 'Sua conta foi excluída com sucesso.');
+
+})->middleware(['auth', 'store.next.redirect', 'password.confirm:password.confirm, 0'])->name('delete-account');
+*/
+
 # Home
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth', 'verified']);
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 # Genre
 Route::get('/genre', [App\Http\Controllers\GenreController::class, 'index'])->name('genre_index')->middleware('auth');

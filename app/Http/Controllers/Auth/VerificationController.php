@@ -33,9 +33,14 @@ class VerificationController extends Controller
      * @return void
      */
     public function __construct()
-    {
+    {   
+        // APENAS AUTENTICADOS PODEM ACESSAR ESSE RECURSO
         $this->middleware('auth');
+
+        // MIDDLEWARE DE ASSINATURA - SOMENTE PARA A ROTA 'verify'
         $this->middleware('signed')->only('verify');
+
+        // ROTAS DE VERIFICAÇÃO E ENVIO DE E-MAIL - LIMITE 6x ENVIO POR MINUTO - EVITAR SPAM
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
 }

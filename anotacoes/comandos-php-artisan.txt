@@ -34,3 +34,73 @@ composer dump-autoload -o
 
 # Inicia servidor de desenvolvimento do Laravel e configura-o para aceitar conexões de qualquer IP no host
 php artisan serve --host 0.0.0.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ROTAS DO USUÁRIO
+Auth::routes(['verify' => true]);
+
+# Login
+Route::get('/', function(){
+
+    return view('auth/login'); 
+
+})->middleware('guest');
+
+GET|HEAD   login ............................................. login › Auth\LoginController@showLoginForm - NÃO LOGADO
+POST       login ............................................................. Auth\LoginController@login - NÃO LOGADO
+---------------------------------------------------------------------------------------------------------
+GET|HEAD   register ............................. register › Auth\RegisterController@showRegistrationForm - NÃO LOGADO
+POST       register .................................................... Auth\RegisterController@register - NÃO LOGADO
+---------------------------------------------------------------------------------------------------------
+GET|HEAD   password/reset ...........password.request › Auth\ForgotPasswordController@showLinkRequestForm - NÃO LOGADO
+POST       password/email ............. password.email › Auth\ForgotPasswordController@sendResetLinkEmail - NÃO LOGADO
+---------------------------------------------------------------------------------------------------------
+GET|HEAD   password/confirm ........... password.confirm › Auth\ConfirmPasswordController@showConfirmForm - LOGADO
+POST       password/confirm ...................................... Auth\ConfirmPasswordController@confirm - LOGADO 
+---------------------------------------------------------------------------------------------------------
+GET|HEAD   password/reset/{token} ........... password.reset › Auth\ResetPasswordController@showResetForm - LOGADO
+POST       password/reset .......................... password.update › Auth\ResetPasswordController@reset - LOGADO
+---------------------------------------------------------------------------------------------------------
+POST       logout .................................................. logout › Auth\LoginController@logout - LOGADO
+---------------------------------------------------------------------------------------------------------
+GET|HEAD   email/verify ............. verification.notice › Auth\VerificationController@show - LOGADO
+POST       email/resend ............. verification.resend › Auth\VerificationController@resend - LOGADO
+GET|HEAD   email/verify/{id}/{hash} . verification.verify › Auth\VerificationController@verify - LOGADO
+
+
+
+
+
+
+
+// Tem algum perigo eu executar esses comandos nessa sequencia:
+// php artisan config:clear 
+// php artisan config:cache
+// php artisan route:clear
+// php artisan route:cache
+// 
+// Pois esta dando problemas quando acesso a rota '/', diz que o metodo GET não e suportado, mais a rota e um GET.
+
+SOBRE OS COMANDOS ACIMA: Nunca use php artisan config:cache ou php artisan route:cache durante o desenvolvimento.
+FIQUE LIGADO COM POSSIVEIS ERROS CONFLITANTES OU A FALTA DE UMA VARIAVEL DE AMBIENTE OU ROTAS QUE PRECISAM DE VALIDAÇÃO.
+
+// password.confirm -> MIDDLEWARE
+// :
+// password.confirm -> ROTA OPCIONAL, PODE SER UMA PERSONALIZADA
+// ,
+// 1 -> TEMPO PASSADO EM SEGUNDOS
+// OBS: PARA ISSO FUNCIONAR, EM config/auth.php O PARAMENTRO 'password_timeout' TEM QUE ESTA COM SEU VALOR PADRÃO DE 10800
+
+// OUTRA OBS: ISSO AQUI => routes/web.php -> 'password.confirm:password.confirm,10' TEM PRIORIDADE SOBRE ISSO [config/auth.php -> 'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800)]
