@@ -113,7 +113,7 @@
                                     <hr class="mt-5 mb-4 border-secondary-subtle">
                                     <div class="d-flex gap-2 flex-column flex-md-row justify-content-center">
                                         @if (Route::has('password.request'))
-                                            <a href="{{ route('password.request') }}" class="link-secondary text-decoration-none">{{ __('Retornar') }}</a>
+                                            <a href="{{ url()->previous() }}" class="link-secondary text-decoration-none">{{ __('Retornar') }}</a>
                                             <a href="{{ route('password.request') }}" class="link-secondary text-decoration-none">{{ __('Esqueceu sua senha') }}</a>
                                         @endif                                                                            
                                     </div>

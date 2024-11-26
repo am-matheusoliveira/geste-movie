@@ -7,7 +7,7 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <strong>{{ __('Gêneros') }}</strong>                     
+                        <strong>{{ __('Gêneros') }}</strong>
                     </div>
 
                     <div class="card-body">                    

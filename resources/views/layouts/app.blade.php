@@ -87,7 +87,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <!-- <a href="#!" role="button" id="navbarDropdown" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }}</a> -->
-                                <button type="button" id="navbarDropdown" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }}</button>
+                                <button type="button" id="navbarDropdown" class="nav-link dropdown-toggle shadow-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->name }}</button>
                                 
                                 <!-- Menu dropdown com opções para o usuário logado -->                                
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

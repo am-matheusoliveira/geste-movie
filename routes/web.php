@@ -17,7 +17,6 @@ Route::get('/', function(){
 })->middleware('guest');
 
 // TESTE DE USO DO MIDDLEWARE - password.confirm DO LARAVEL UI
-/*
 Route::get('/delete-account', function () {
 
     // Excluindo o usuário logado
@@ -31,7 +30,6 @@ Route::get('/delete-account', function () {
     return redirect('/login')->with('status', 'Sua conta foi excluída com sucesso.');
 
 })->middleware(['auth', 'store.next.redirect', 'password.confirm:password.confirm, 0'])->name('delete-account');
-*/
 
 # Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth', 'verified']);
